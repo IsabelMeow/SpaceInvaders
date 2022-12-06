@@ -127,15 +127,15 @@ public class GameWorld extends GameEngine {
         primaryStage.getScene().setOnMousePressed(fireOrMove);
 
         // set up stats
-        EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
+              EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
                 spaceShip.shieldToggle();
                 return;
             }
             spaceShip.changeWeapon(event.getCode());
+     
         };
         primaryStage.getScene().setOnKeyPressed(changeWeapons);
-
         // set up stats
         EventHandler showMouseMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
             mousePtLabel.setText("Mouse PT = (" + event.getX() + ", " + event.getY() + ")");
