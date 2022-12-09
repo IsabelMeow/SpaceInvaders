@@ -15,7 +15,6 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.EventHandler;
 
 /**
  * A spaceship with 32 directions When two atoms collide each will fade and

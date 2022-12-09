@@ -17,6 +17,7 @@ public class SpriteManager {
      * All the sprite objects currently in play
      */
     private final static List<Sprite> sprites = new ArrayList<>();
+    
 
     /**
      * A global single threaded list used to check collision against other
