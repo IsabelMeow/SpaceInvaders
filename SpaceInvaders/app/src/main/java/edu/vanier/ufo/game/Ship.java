@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.effect.Glow;
 
 /**
  * A spaceship with 32 directions When two atoms collide each will fade and
@@ -149,6 +150,11 @@ public class Ship extends Sprite {
      * A fade effect while the shields are up momentarily
      */
     FadeTransition shieldFade;
+    
+    /**
+     * A changing color effect while the shields are up momentarily
+     */
+    StrokeTransition shieldRainbow;
 
     /**
      * The collision bounding region for the ship
@@ -543,7 +549,7 @@ public class Ship extends Sprite {
         this.keyCode = keyCode;
     }
 
-    public void shieldToggle() {
+    public void shieldToggle()  {
         if (shield == null) {
             RotatedShipImage shipImage = getCurrentShipImage();
             double x = shipImage.getBoundsInLocal().getWidth() / 2;
@@ -551,12 +557,15 @@ public class Ship extends Sprite {
 
             // add shield
             shield = new Circle();
-            shield.setRadius(60);
-            shield.setStrokeWidth(5);
-            shield.setStroke(Color.AZURE);
+            shield.setRadius(65);
+            shield.setStrokeWidth(7);
+            // add glowing effect to shield
+            Glow glow = new Glow();
+            glow.setLevel(10);
+            shield.setEffect(glow);
             shield.setCenterX(x);
             shield.setCenterY(y);
-            shield.setOpacity(.70);
+            shield.setOpacity(.9);
             setCollisionBounds(shield);
             //--
             shieldFade = new FadeTransition();
@@ -566,23 +575,36 @@ public class Ship extends Sprite {
             shieldFade.setCycleCount(12);
             shieldFade.setAutoReverse(true);
             shieldFade.setNode(shield);
+            
+            // add changing colors to shield
+            shieldRainbow = new StrokeTransition(Duration.millis(1000), shield, Color.FLORALWHITE, Color.FUCHSIA);
+            shieldRainbow.setCycleCount(12);
+            shieldRainbow.setAutoReverse(true);
+            
             shieldFade.setOnFinished((ActionEvent actionEvent) -> {
                 shieldOn = false;
                 flipBook.getChildren().remove(shield);
                 shieldFade.stop();
+                shieldRainbow.stop();
+                
                 setCollisionBounds(hitBounds);
             });
             shieldFade.playFromStart();
+            shieldRainbow.playFromStart();
 
+            
         }
         shieldOn = !shieldOn;
         if (shieldOn) {
             setCollisionBounds(shield);
             flipBook.getChildren().add(0, shield);
             shieldFade.playFromStart();
+            shieldRainbow.playFromStart();
+
         } else {
             flipBook.getChildren().remove(shield);
             shieldFade.stop();
+            shieldRainbow.stop();
             setCollisionBounds(hitBounds);
         }
     }
