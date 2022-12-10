@@ -85,11 +85,11 @@ public class ResourcesManager {
         invaders.put(8, Inv8);
         invaders.put(9, Inv9);
         invaders.put(10, Inv10);
-        invaders.put(6, Inv11);
-        invaders.put(7, Inv12);
-        invaders.put(8, Inv13);
-        invaders.put(9, Inv14);
-        invaders.put(10, Inv15);
+        invaders.put(11, Inv11);
+        invaders.put(12, Inv12);
+        invaders.put(13, Inv13);
+        invaders.put(14, Inv14);
+        invaders.put(15, Inv15);
         return invaders;
     }
 

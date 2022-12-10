@@ -504,6 +504,7 @@ public class Ship extends Sprite {
     }
 
     public Missile fire() {
+        
         Missile fireMissile;
         float slowDownAmt = 0;
         int scaleBeginningMissle;
