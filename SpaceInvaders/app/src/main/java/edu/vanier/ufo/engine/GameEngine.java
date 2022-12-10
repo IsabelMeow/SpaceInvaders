@@ -135,6 +135,14 @@ public abstract class GameEngine {
      * handleCollision() method. The derived class should override
      * handleCollision() method.
      */
+    
+    protected void victory(){
+        
+    }
+    
+    protected void defeat(){
+        
+    }
     protected void checkCollisions() {
         //FIXME: handle collision with the spaceship.
         // check other sprite's collisions
@@ -145,6 +153,8 @@ public abstract class GameEngine {
                 if (handleCollision(spriteA, spriteB)) {
                     Shape intersect = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     if (spriteA instanceof Missile) {
+                        Missile missile = ((Missile) spriteA); 
+                        missile.implode(this);
                        
                         
                     }
