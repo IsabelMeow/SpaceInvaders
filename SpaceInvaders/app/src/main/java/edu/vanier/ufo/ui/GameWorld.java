@@ -99,20 +99,19 @@ public class GameWorld extends GameEngine {
         
         
         EventHandler fireOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
-            if (KeyCode.DIGIT1 == event.getCode()) {
-            Missile missile = new Missile(ResourcesManager.missile1);
-          
-        } else if (KeyCode.DIGIT2 == event.getCode()){
-            Missile missile = new Missile(ResourcesManager.missile2); 
-           
-        } else if (KeyCode.DIGIT3 == event.getCode()){
-            Missile missile = new Missile (ResourcesManager.missile3); 
-             
-        }
+             if (KeyCode.SPACE == event.getCode()) {
+                this.gameLevel.getShip().shieldToggle();
+                return;
+            }
+            this.gameLevel.getShip().changeWeapon(event.getCode());
+     
+       
+        
             if (KeyCode.L == event.getCode()) {
                
                 Missile missile = this.gameLevel.getShip().fire(); 
                 System.out.println("Created missile");
+                getSceneNodes().getChildren().add(0, missile.getNode()); 
                
                  getSoundManager().playSound("laser");
             }
