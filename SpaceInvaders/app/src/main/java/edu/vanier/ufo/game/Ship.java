@@ -188,8 +188,9 @@ public class Ship extends Sprite {
         // set javafx node to an image
         firstShip.setVisible(true);
         setNode(flipBook);
-        flipBook.setTranslateX(350);
-        flipBook.setTranslateY(450);
+        //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
+        flipBook.setTranslateX(435); 
+        flipBook.setTranslateY(475); 
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
         flipBook.setManaged(false);
@@ -552,7 +553,7 @@ public class Ship extends Sprite {
             shield = new Circle();
             shield.setRadius(60);
             shield.setStrokeWidth(5);
-            shield.setStroke(Color.LIMEGREEN);
+            shield.setStroke(Color.AZURE);
             shield.setCenterX(x);
             shield.setCenterY(y);
             shield.setOpacity(.70);
