@@ -23,11 +23,7 @@ public class ShipChooser {
         Ships.add(ResourcesManager.SS2);
         Ships.add(ResourcesManager.SS3);
         Ships.add(ResourcesManager.SS4);
-        Ships.add(ResourcesManager.SS5);
-        Ships.add(ResourcesManager.SS6);
-        Ships.add(ResourcesManager.SS7);
-        Ships.add(ResourcesManager.SS8);
-        Ships.add(ResourcesManager.SS9);
+        
         return Ships;
 
     }
