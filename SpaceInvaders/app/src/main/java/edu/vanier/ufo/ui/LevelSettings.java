@@ -15,13 +15,12 @@ import javafx.scene.image.Image;
  * @author nguye
  */
 public class LevelSettings {
+    
     private int levelNumber;
     private Ship ship;
     private Label score;
     private int nbOfInvaders; 
   
-    
-    
 
     ResourcesManager RM = new ResourcesManager(); 
     
@@ -38,6 +37,7 @@ public class LevelSettings {
         } else if (this.getLevelNumber() == 3){
             this.ship = new Ship(new Image(ResourcesManager.SS3)); 
             return this.getShip(); 
+            
         } else if (this.getLevelNumber() == 4) {
             this.ship = new Ship (new Image(ResourcesManager.SS4)); 
             return this.getShip(); 
