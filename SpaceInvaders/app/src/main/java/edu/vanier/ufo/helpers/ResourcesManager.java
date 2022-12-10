@@ -44,6 +44,11 @@ public class ResourcesManager {
     public static final String Inv8 = ENEMY_FOLDER + "spaceMeteors_001.png"; 
     public static final String Inv9 = ENEMY_FOLDER + "spaceBuilding_011.png"; 
     public static final String Inv10 = ENEMY_FOLDER + "spaceShips_009.png"; 
+    public static final String Inv11 = ENEMY_FOLDER + "shipBeige_manned.png"; 
+    public static final String Inv12 = ENEMY_FOLDER + "shipBlue_manned.png"; 
+    public static final String Inv13 = ENEMY_FOLDER + "shipGreen_manned.png"; 
+    public static final String Inv14 = ENEMY_FOLDER + "shipPink_manned.png"; 
+    public static final String Inv15 = ENEMY_FOLDER + "shipYellow_manned.png"; 
     public static final String explosion = ENEMY_FOLDER + "explosion.gif"; 
             //keep
             // Sound effect files
@@ -80,6 +85,11 @@ public class ResourcesManager {
         invaders.put(8, Inv8);
         invaders.put(9, Inv9);
         invaders.put(10, Inv10);
+        invaders.put(6, Inv11);
+        invaders.put(7, Inv12);
+        invaders.put(8, Inv13);
+        invaders.put(9, Inv14);
+        invaders.put(10, Inv15);
         return invaders;
     }
 

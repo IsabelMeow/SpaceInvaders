@@ -177,7 +177,9 @@ public class GameWorld extends GameEngine {
         Random rnd = new Random();
         Scene gameSurface = getGameSurface();
         for (int i = 0; i < numSpheres; i++) {
-            Atom atom = new Atom(ResourcesManager.INVADER_SCI_FI);
+            //Randomly selects sprites from getInvadersSprites between the # of elements in the Hashmap
+            Random randomElement = new Random();
+            Atom atom = new Atom(ResourcesManager.getInvaderSprites().get(1 + randomElement.nextInt(ResourcesManager.getInvaderSprites().size())));           
             ImageView atomImage = atom.getImageViewNode();
             // random 0 to 2 + (.0 to 1) * random (1 or -1)
             // Randomize the location of each newly generated atom.
