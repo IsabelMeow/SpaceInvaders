@@ -24,6 +24,15 @@ import java.util.List;
  * @author cdea
  */
 public class Ship extends Sprite {
+    private double lifeCount = 3; 
+
+    public double getLifeCount() {
+        return lifeCount;
+    }
+
+    public void setLifeCount(double lifeCount) {
+        this.lifeCount = lifeCount;
+    }
 
     /**
      * 360 degree turn
@@ -182,6 +191,47 @@ public class Ship extends Sprite {
         //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
         flipBook.setTranslateX(435); 
         flipBook.setTranslateY(475); 
+        flipBook.setCache(true);
+        flipBook.setCacheHint(CacheHint.SPEED);
+        flipBook.setManaged(false);
+        flipBook.setAutoSizeChildren(false);
+        initHitZone();
+    }
+    
+       public Ship(Image shipImage) {
+        // Load one image.
+        
+        stopArea.setRadius(40);
+        stopArea.setStroke(Color.ORANGE);
+        RotatedShipImage prev = null;
+
+        // create all the number of directions based on a unit angle. 360 divided by NUM_DIRECTIONS
+        for (int i = 0; i < NUM_DIRECTIONS; i++) {
+            RotatedShipImage imageView = new RotatedShipImage();
+            imageView.setImage(shipImage);
+            imageView.setRotate(-1 * i * UNIT_ANGLE_PER_FRAME);
+            imageView.setCache(true);
+            imageView.setCacheHint(CacheHint.SPEED);
+            imageView.setManaged(false);
+
+            imageView.setPrevRotatedImage(prev);
+            imageView.setVisible(false);
+            directionalShips.add(imageView);
+            if (prev != null) {
+                prev.setNextRotatedImage(imageView);
+            }
+            prev = imageView;
+            flipBook.getChildren().add(imageView);
+        }
+
+        RotatedShipImage firstShip = directionalShips.get(0);
+        firstShip.setPrevRotatedImage(prev);
+        prev.setNextRotatedImage(firstShip);
+        // set javafx node to an image
+        firstShip.setVisible(true);
+        setNode(flipBook);
+        flipBook.setTranslateX(350);
+        flipBook.setTranslateY(450);
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
         flipBook.setManaged(false);
@@ -451,13 +501,23 @@ public class Ship extends Sprite {
         Missile fireMissile;
         float slowDownAmt = 0;
         int scaleBeginningMissle;
-        if (KeyCode.DIGIT2 == keyCode) {
-            fireMissile = new Missile(ResourcesManager.ROCKET_FIRE);
+        if (KeyCode.DIGIT1 == keyCode) {
+            fireMissile = new Missile(ResourcesManager.missile1);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-        } else {
-            fireMissile = new Missile(ResourcesManager.ROCKET_SMALL);
-            scaleBeginningMissle = 8;
+        } else if (KeyCode.DIGIT2 == keyCode){
+            fireMissile = new Missile(ResourcesManager.missile2); 
+            slowDownAmt = 1.3f; 
+            scaleBeginningMissle = 11; 
+        } else if (KeyCode.DIGIT3 == keyCode){
+            fireMissile = new Missile (ResourcesManager.missile3); 
+            slowDownAmt = 1.3f; 
+            scaleBeginningMissle = 11; 
+        } else{
+        
+            fireMissile = new Missile(ResourcesManager.missile1);
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
         }
 
         //fireMissile.setPosition(getNode().getLayoutX()+ 10, getNode().getLayoutY() - 20);

@@ -31,12 +31,11 @@ import javafx.scene.image.ImageView;
  */
 public class GameWorld extends GameEngine {
 
-    // mouse pt label
-    Label mousePtLabel = new Label();
-    // mouse press pt label
-    Label mousePressPtLabel = new Label();
-    Ship spaceShip = new Ship();
-
+    LevelSettings gameLevel;
+    public Label levelNumber; 
+    Ship spaceShip; 
+    
+    
     public GameWorld(int fps, String title) {
         super(fps, title);
     }
@@ -48,6 +47,8 @@ public class GameWorld extends GameEngine {
      */
     @Override
     public void initialize(final Stage primaryStage) {
+        this.gameLevel = new LevelSettings(1, 12); 
+        this.levelNumber = new Label();
         // Sets the window title
         primaryStage.setTitle(getWindowTitle());
         //primaryStage.setFullScreen(true);
@@ -67,20 +68,19 @@ public class GameWorld extends GameEngine {
         // Create many spheres
         generateManySpheres(5);
 
-        getSpriteManager().addSprites(spaceShip);
-        getSceneNodes().getChildren().add(0, spaceShip.getNode());
+        getSpriteManager().addSprites(this.gameLevel.getShip());
+        getSceneNodes().getChildren().add(0, this.gameLevel.getShip().getNode());
         // mouse point
         VBox stats = new VBox();
 
         HBox row1 = new HBox();
-        mousePtLabel.setTextFill(Color.WHITE);
-        row1.getChildren().add(mousePtLabel);
-        HBox row2 = new HBox();
-        mousePressPtLabel.setTextFill(Color.WHITE);
-        row2.getChildren().add(mousePressPtLabel);
+        gameLevel.setLevelNumber(1);
+        this.levelNumber.setText("Level: " + gameLevel.getLevelNumber());
+        this.levelNumber.setTextFill(Color.WHITE);
+        row1.getChildren().add(levelNumber);
         stats.getChildren().add(row1);
-        stats.getChildren().add(row2);
         
+       
         //TODO: Add the HUD here.
         getSceneNodes().getChildren().add(0, stats);
 
@@ -95,50 +95,73 @@ public class GameWorld extends GameEngine {
      * @param primaryStage The primary stage (app window).
      */
     private void setupInput(Stage primaryStage) {
-        System.out.println("Ship's center is (" + spaceShip.getCenterX() + ", " + spaceShip.getCenterY() + ")");
+        System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
+        
+        
+        EventHandler fireOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
+            if (KeyCode.DIGIT1 == event.getCode()) {
+            Missile missile = new Missile(ResourcesManager.missile1);
+          
+        } else if (KeyCode.DIGIT2 == event.getCode()){
+            Missile missile = new Missile(ResourcesManager.missile2); 
+           
+        } else if (KeyCode.DIGIT3 == event.getCode()){
+            Missile missile = new Missile (ResourcesManager.missile3); 
+             
+        }
+            if (KeyCode.L == event.getCode()) {
+               
+                Missile missile = this.gameLevel.getShip().fire(); 
+                System.out.println("Created missile");
+               
+                 getSoundManager().playSound("laser");
+            }
+        
+        };
+        primaryStage.getScene().setOnKeyPressed(fireOrMove);
 
-        EventHandler fireOrMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
-            mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
+        EventHandler fireOrMove1 = (EventHandler<MouseEvent>) (MouseEvent event) -> {
+            //mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
             if (event.getButton() == MouseButton.PRIMARY) {
 
                 // Aim
-                spaceShip.plotCourse(event.getX(), event.getY(), false);
+                this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), false);
 
-                // fire
-                Missile missile = spaceShip.fire();
-                getSpriteManager().addSprites(missile);
+                //fire
+                Missile missile = this.gameLevel.getShip().fire();
+               getSpriteManager().addSprites(missile);
 
                 // play sound
-                getSoundManager().playSound("laser");
+                //getSoundManager().playSound("laser");
 
-                getSceneNodes().getChildren().add(0, missile.getNode());
+                //getSceneNodes().getChildren().add(0, missile.getNode());
 
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 // determine when all atoms are not on the game surface. Ship should be one sprite left.
 
                 // stop ship from moving forward
-                spaceShip.applyTheBrakes(event.getX(), event.getY());
+                this.gameLevel.getShip().applyTheBrakes(event.getX(), event.getY());
                 // move forward and rotate ship
-                spaceShip.plotCourse(event.getX(), event.getY(), true);
+                this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), true);
             }
         };
 
         // Initialize input
-        primaryStage.getScene().setOnMousePressed(fireOrMove);
+        primaryStage.getScene().setOnMousePressed(fireOrMove1);
 
         // set up stats
               EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
-                spaceShip.shieldToggle();
+                this.gameLevel.getShip().shieldToggle();
                 return;
             }
-            spaceShip.changeWeapon(event.getCode());
+            this.gameLevel.getShip().changeWeapon(event.getCode());
      
         };
-        primaryStage.getScene().setOnKeyPressed(changeWeapons);
+        
         // set up stats
         EventHandler showMouseMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
-            mousePtLabel.setText("Mouse PT = (" + event.getX() + ", " + event.getY() + ")");
+            //mousePtLabel.setText("Mouse PT = (" + event.getX() + ", " + event.getY() + ")");
         };
 
         primaryStage.getScene().setOnMouseMoved(showMouseMove);
