@@ -544,6 +544,7 @@ public class Ship extends Sprite {
     }
 
     public void shieldToggle() {
+        
         if (shield == null) {
             RotatedShipImage shipImage = getCurrentShipImage();
             double x = shipImage.getBoundsInLocal().getWidth() / 2;
