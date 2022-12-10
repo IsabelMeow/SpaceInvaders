@@ -94,6 +94,7 @@ public class GameWorld extends GameEngine {
      *
      * @param primaryStage The primary stage (app window).
      */
+    
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
         
@@ -105,11 +106,32 @@ public class GameWorld extends GameEngine {
             }
             this.gameLevel.getShip().changeWeapon(event.getCode());
      
-       
         
             if (KeyCode.L == event.getCode()) {
                
-                Missile missile = this.gameLevel.getShip().fire(); 
+                Missile missile = (new Missile(ResourcesManager.missile1)); 
+                this.gameLevel.getShip().setFireMissile(missile); 
+                this.gameLevel.getShip().fire(); 
+                System.out.println("Created missile");
+                getSceneNodes().getChildren().add(0, missile.getNode()); 
+               
+                 getSoundManager().playSound("laser");
+            }
+             if (KeyCode.P == event.getCode()) {
+               
+                Missile missile = (new Missile(ResourcesManager.missile2)); 
+                this.gameLevel.getShip().setFireMissile(missile); 
+                this.gameLevel.getShip().fire(); 
+                System.out.println("Created missile");
+                getSceneNodes().getChildren().add(0, missile.getNode()); 
+               
+                 getSoundManager().playSound("laser");
+            }
+              if (KeyCode.O == event.getCode()) {
+               
+                Missile missile = (new Missile(ResourcesManager.missile3)); 
+                this.gameLevel.getShip().setFireMissile(missile); 
+                this.gameLevel.getShip().fire(); 
                 System.out.println("Created missile");
                 getSceneNodes().getChildren().add(0, missile.getNode()); 
                
@@ -148,22 +170,8 @@ public class GameWorld extends GameEngine {
         // Initialize input
         primaryStage.getScene().setOnMousePressed(fireOrMove1);
 
-        // set up stats
-              EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
-            if (KeyCode.SPACE == event.getCode()) {
-                this.gameLevel.getShip().shieldToggle();
-                return;
-            }
-            this.gameLevel.getShip().changeWeapon(event.getCode());
-     
-        };
+    
         
-        // set up stats
-        EventHandler showMouseMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
-            //mousePtLabel.setText("Mouse PT = (" + event.getX() + ", " + event.getY() + ")");
-        };
-
-        primaryStage.getScene().setOnMouseMoved(showMouseMove);
     }
 
     /**

@@ -502,26 +502,35 @@ public class Ship extends Sprite {
         stopArea.setCenterX(screenX);
         stopArea.setCenterY(screenY);
     }
+private Missile fireMissile;
+
+    public Missile getFireMissile() {
+        return fireMissile;
+    }
+
+    public void setFireMissile(Missile fireMissile) {
+        this.fireMissile = fireMissile;
+    }
 
     public Missile fire() {
-        Missile fireMissile;
-        float slowDownAmt = 0;
+        
+        float slowDownAmt; 
         int scaleBeginningMissle;
-        if (KeyCode.DIGIT1 == keyCode) {
-            fireMissile = new Missile(ResourcesManager.missile1);
+        if (KeyCode.L == keyCode) {
+            fireMissile = this.getFireMissile(); 
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-        } else if (KeyCode.DIGIT2 == keyCode){
-            fireMissile = new Missile(ResourcesManager.missile2); 
+        } else if (KeyCode.P == keyCode){
+            fireMissile = this.getFireMissile(); 
             slowDownAmt = 1.3f; 
             scaleBeginningMissle = 11; 
-        } else if (KeyCode.DIGIT3 == keyCode){
-            fireMissile = new Missile (ResourcesManager.missile3); 
+        } else if (KeyCode.O == keyCode){
+            fireMissile = this.getFireMissile(); 
             slowDownAmt = 1.3f; 
             scaleBeginningMissle = 11; 
         } else{
         
-            fireMissile = new Missile(ResourcesManager.missile1);
+            fireMissile = new Missile(ResourcesManager.missile3);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
         }
