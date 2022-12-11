@@ -345,7 +345,11 @@ public class GameWorld extends GameEngine {
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
 
-                if (spriteA != spaceShip) {
+                //load sound
+                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
+                // play  explosion sound
+                getSoundManager().playSound("explosion");
+                if (spriteA != spaceShip) {                  
                     spriteA.handleDeath(this);
                 }
                 if (spriteB != spaceShip) {

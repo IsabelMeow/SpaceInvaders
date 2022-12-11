@@ -52,6 +52,8 @@ public class ResourcesManager {
     public static final String explosion = IMAGES_FOLDER + "explosion.gif"; 
             //keep
             // Sound effect files
+    public static final String EXPLOSION = SOUNDS_FOLDER + "explosion.wav";    
+    
    
     public static final String missile1 = MISSILE_FOLDER + "spaceMissiles_001.png"; 
     public static final String missile2 = MISSILE_FOLDER + "spaceMissiles_003.png"; 
