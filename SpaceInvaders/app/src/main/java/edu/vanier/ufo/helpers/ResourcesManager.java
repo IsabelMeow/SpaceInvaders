@@ -24,7 +24,7 @@ public class ResourcesManager {
     // Rocket images
     public static final String ROCKET_SMALL = IMAGES_FOLDER + "rocket.png";
     public static final String ROCKET_FIRE = IMAGES_FOLDER + "missile.png";
-
+    
     // Invader sprites.
     public static final String INVADER_LARGE_SHIP = IMAGES_FOLDER + "large_invader_b.png";
     public static final String INVADER_SMALL_SHIP = IMAGES_FOLDER + "small_invader_b.png";
