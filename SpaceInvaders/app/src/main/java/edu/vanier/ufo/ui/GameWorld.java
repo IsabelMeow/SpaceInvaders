@@ -112,6 +112,7 @@ public class GameWorld extends GameEngine {
                 Missile missile = (new Missile(ResourcesManager.missile1)); 
                 this.gameLevel.getShip().setFireMissile(missile); 
                 this.gameLevel.getShip().fire(); 
+                getSpriteManager().addSprites(missile);
                 System.out.println("Created missile");
                 getSceneNodes().getChildren().add(0, missile.getNode()); 
                
@@ -120,8 +121,9 @@ public class GameWorld extends GameEngine {
              if (KeyCode.P == event.getCode()) {
                
                 Missile missile = (new Missile(ResourcesManager.missile2)); 
-                this.gameLevel.getShip().setFireMissile(missile); 
+                this.gameLevel.getShip().setFireMissile(missile);               
                 this.gameLevel.getShip().fire(); 
+                getSpriteManager().addSprites(missile);
                 System.out.println("Created missile");
                 getSceneNodes().getChildren().add(0, missile.getNode()); 
                
@@ -132,6 +134,7 @@ public class GameWorld extends GameEngine {
                 Missile missile = (new Missile(ResourcesManager.missile3)); 
                 this.gameLevel.getShip().setFireMissile(missile); 
                 this.gameLevel.getShip().fire(); 
+                getSpriteManager().addSprites(missile);
                 System.out.println("Created missile");
                 getSceneNodes().getChildren().add(0, missile.getNode()); 
                
