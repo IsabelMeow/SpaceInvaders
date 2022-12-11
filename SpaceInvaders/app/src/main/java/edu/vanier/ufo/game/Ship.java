@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.effect.Glow;
 
 /**
@@ -25,7 +26,8 @@ import javafx.scene.effect.Glow;
  * @author cdea
  */
 public class Ship extends Sprite {
-    private double lifeCount = 3; 
+
+    private double lifeCount = 3;
 
     public double getLifeCount() {
         return lifeCount;
@@ -150,7 +152,7 @@ public class Ship extends Sprite {
      * A fade effect while the shields are up momentarily
      */
     FadeTransition shieldFade;
-    
+
     /**
      * A changing color effect while the shields are up momentarily
      */
@@ -195,18 +197,18 @@ public class Ship extends Sprite {
         firstShip.setVisible(true);
         setNode(flipBook);
         //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
-        flipBook.setTranslateX(435); 
-        flipBook.setTranslateY(475); 
+        flipBook.setTranslateX(435);
+        flipBook.setTranslateY(475);
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
         flipBook.setManaged(false);
         flipBook.setAutoSizeChildren(false);
         initHitZone();
     }
-    
-       public Ship(Image shipImage) {
+
+    public Ship(Image shipImage) {
         // Load one image.
-        
+
         stopArea.setRadius(40);
         stopArea.setStroke(Color.ORANGE);
         RotatedShipImage prev = null;
@@ -376,6 +378,79 @@ public class Ship extends Sprite {
      * @param thrust Thrust ship forward or not. True move forward otherwise
      * false.
      */
+    public void plotCourse(Map<KeyCode, Boolean> vkeys, boolean thrust) {
+
+        if (u == null) {
+            u = new CustomVector(1, 0);
+        }
+        CustomVector v = new CustomVector(
+                (
+                 (vkeys.getOrDefault(KeyCode.A, false) ? -1 : 0)
+                + (vkeys.getOrDefault(KeyCode.D, false) ? 1 : 0)),
+                ((vkeys.getOrDefault(KeyCode.S, false) ? -1:0)
+                + (vkeys.getOrDefault(KeyCode.W, false) ? 1:0))
+        );
+        if (v.x == 0 && v.y ==0) {
+            vX = 0; 
+            vY = 0; 
+            
+        }
+
+        double atan2RadiansU = Math.atan2(u.y, u.x);
+        double atan2DegreesU = Math.toDegrees(atan2RadiansU);
+
+        double atan2RadiansV = Math.atan2(v.y, v.x);
+        double atan2DegreesV = Math.toDegrees(atan2RadiansV);
+
+        double angleBetweenUAndV = atan2DegreesV - atan2DegreesU;
+
+        // if abs value is greater than 180 move counter clockwise
+        //(or opposite of what is determined)
+        double absAngleBetweenUAndV = Math.abs(angleBetweenUAndV);
+        boolean goOtherWay = false;
+        if (absAngleBetweenUAndV > 180) {
+            if (angleBetweenUAndV < 0) {
+                turnDirection = DIRECTION.COUNTER_CLOCKWISE;
+                goOtherWay = true;
+            } else if (angleBetweenUAndV > 0) {
+                turnDirection = DIRECTION.CLOCKWISE;
+                goOtherWay = true;
+            } else {
+                turnDirection = Ship.DIRECTION.NEITHER;
+            }
+        } else {
+            if (angleBetweenUAndV < 0) {
+                turnDirection = Ship.DIRECTION.CLOCKWISE;
+            } else if (angleBetweenUAndV > 0) {
+                turnDirection = Ship.DIRECTION.COUNTER_CLOCKWISE;
+            } else {
+                turnDirection = Ship.DIRECTION.NEITHER;
+            }
+        }
+
+        double degreesToMove = absAngleBetweenUAndV;
+        if (goOtherWay) {
+            degreesToMove = TWO_PI_DEGREES - absAngleBetweenUAndV;
+        }
+
+        //int q = v.quadrant();
+        uIndex = Math.round((float) (atan2DegreesU / UNIT_ANGLE_PER_FRAME));
+        if (uIndex < 0) {
+            uIndex = NUM_DIRECTIONS + uIndex;
+        }
+        vIndex = Math.round((float) (atan2DegreesV / UNIT_ANGLE_PER_FRAME));
+        if (vIndex < 0) {
+            vIndex = NUM_DIRECTIONS + vIndex;
+        }
+        if (thrust) {
+            vX = Math.cos(atan2RadiansV) * THRUST_AMOUNT;
+            vY = -Math.sin(atan2RadiansV) * THRUST_AMOUNT;
+        }
+        turnShip();
+
+        u = v;
+    }
+
     public void plotCourse(double screenX, double screenY, boolean thrust) {
         // get center of ship
         double sx = getCenterX();
@@ -517,23 +592,23 @@ public class Ship extends Sprite {
     }
 
     public Missile fire() {
-        
-        float slowDownAmt; 
+
+        float slowDownAmt;
         int scaleBeginningMissle;
         if (KeyCode.L == keyCode) {
-            fireMissile = this.getFireMissile(); 
+            fireMissile = this.getFireMissile();
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-        } else if (KeyCode.P == keyCode){
-            fireMissile = this.getFireMissile(); 
-            slowDownAmt = 1.3f; 
-            scaleBeginningMissle = 11; 
-        } else if (KeyCode.O == keyCode){
-            fireMissile = this.getFireMissile(); 
-            slowDownAmt = 1.3f; 
-            scaleBeginningMissle = 11; 
-        } else{
-        
+        } else if (KeyCode.P == keyCode) {
+            fireMissile = this.getFireMissile();
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
+        } else if (KeyCode.O == keyCode) {
+            fireMissile = this.getFireMissile();
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
+        } else {
+
             fireMissile = new Missile(ResourcesManager.missile3);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
@@ -562,7 +637,7 @@ public class Ship extends Sprite {
         this.keyCode = keyCode;
     }
 
-    public void shieldToggle()  {
+    public void shieldToggle() {
         if (shield == null) {
             RotatedShipImage shipImage = getCurrentShipImage();
             double x = shipImage.getBoundsInLocal().getWidth() / 2;
@@ -588,24 +663,23 @@ public class Ship extends Sprite {
             shieldFade.setCycleCount(12);
             shieldFade.setAutoReverse(true);
             shieldFade.setNode(shield);
-            
+
             // add changing colors to shield
             shieldRainbow = new StrokeTransition(Duration.millis(1000), shield, Color.FLORALWHITE, Color.FUCHSIA);
             shieldRainbow.setCycleCount(12);
             shieldRainbow.setAutoReverse(true);
-            
+
             shieldFade.setOnFinished((ActionEvent actionEvent) -> {
                 shieldOn = false;
                 flipBook.getChildren().remove(shield);
                 shieldFade.stop();
                 shieldRainbow.stop();
-                
+
                 setCollisionBounds(hitBounds);
             });
             shieldFade.playFromStart();
             shieldRainbow.playFromStart();
 
-            
         }
         shieldOn = !shieldOn;
         if (shieldOn) {

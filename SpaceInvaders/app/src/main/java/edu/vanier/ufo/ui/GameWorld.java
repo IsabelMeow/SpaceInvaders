@@ -3,6 +3,7 @@ package edu.vanier.ufo.ui;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.*;
 import edu.vanier.ufo.game.*;
+import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
@@ -97,7 +98,7 @@ public class GameWorld extends GameEngine {
     
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
-        
+        HashMap <KeyCode, Boolean> vkeys = new HashMap(); 
         
         EventHandler fireOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
@@ -105,18 +106,7 @@ public class GameWorld extends GameEngine {
                 return;
             }
             this.gameLevel.getShip().changeWeapon(event.getCode());
-     
-            if (KeyCode.DIGIT1 == event.getCode()) {
-            Missile missile = spaceShip.fire();
-                getSpriteManager().addSprites(missile);
-        } else if (KeyCode.DIGIT2 == event.getCode()){
-            Missile missile = new Missile(ResourcesManager.missile2); 
-           
-        } else if (KeyCode.DIGIT3 == event.getCode()){
-            Missile missile = new Missile (ResourcesManager.missile3); 
-             
-        }
-
+            
             if (KeyCode.L == event.getCode()) {
                
                 Missile missile = (new Missile(ResourcesManager.missile1)); 
@@ -146,11 +136,20 @@ public class GameWorld extends GameEngine {
                 getSceneNodes().getChildren().add(0, missile.getNode()); 
                
                  getSoundManager().playSound("laser");
-            }
+            } else {
+                  vkeys.put(event.getCode(), true); 
+                  this.gameLevel.getShip().plotCourse(vkeys, true);
+              }
         
         };
         primaryStage.getScene().setOnKeyPressed(fireOrMove);
-
+        primaryStage.getScene().setOnKeyReleased(event -> {
+            vkeys.put(event.getCode(), false); 
+                  this.gameLevel.getShip().plotCourse(vkeys, false);
+        }); 
+                
+                
+                
         EventHandler fireOrMove1 = (EventHandler<MouseEvent>) (MouseEvent event) -> {
             //mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
             if (event.getButton() == MouseButton.PRIMARY) {
