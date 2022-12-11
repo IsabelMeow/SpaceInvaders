@@ -35,6 +35,8 @@ public class GameWorld extends GameEngine {
     LevelSettings gameLevel;
     public Label levelNumber; 
     Ship spaceShip; 
+    Atom invader;
+    Missile missile;
     
     
     public GameWorld(int fps, String title) {
@@ -340,7 +342,7 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
-         if (spriteA != spriteB) {
+         if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
 
                 if (spriteA != spaceShip) {
