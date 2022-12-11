@@ -155,8 +155,6 @@ public abstract class GameEngine {
                     if (spriteA instanceof Missile) {
                         Missile missile = ((Missile) spriteA); 
                         missile.implode(this);
-                       
-                        
                     }
                     // The break helps optimize the collisions
                     //  The break statement means one object only hits another
