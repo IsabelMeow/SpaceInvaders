@@ -43,8 +43,7 @@ public class LevelSettings {
             return this.getShip(); 
             
         }
-        
-        
+
         return null; 
     }
     
@@ -89,10 +88,6 @@ public class LevelSettings {
         this.nbOfInvaders = nbOfInvaders;
     }
     
-    
-    
 
-    
-    
     
 }

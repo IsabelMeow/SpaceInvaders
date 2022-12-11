@@ -506,7 +506,7 @@ public class Ship extends Sprite {
         stopArea.setCenterX(screenX);
         stopArea.setCenterY(screenY);
     }
-private Missile fireMissile;
+    private Missile fireMissile;
 
     public Missile getFireMissile() {
         return fireMissile;
