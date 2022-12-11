@@ -65,10 +65,7 @@ public class GameWorld extends GameEngine {
 
         // Setup Game input
         setupInput(primaryStage);
-
-        // Create many spheres depending on current level
-        generateManySpheres(5);
-
+        
         getSpriteManager().addSprites(this.gameLevel.getShip());
         getSceneNodes().getChildren().add(0, this.gameLevel.getShip().getNode());
         // mouse point
@@ -76,7 +73,20 @@ public class GameWorld extends GameEngine {
 
         HBox row1 = new HBox();
         gameLevel.setLevelNumber(1);
-        this.levelNumber.setText("Level: " + gameLevel.getLevelNumber());
+        this.levelNumber.setText("Current Level: " + gameLevel.getLevelNumber());
+        
+        // Create many spheres depending on current level      
+        if(gameLevel.getLevelNumber() == 1){
+            generateManySpheres(5);
+            
+        } else if(gameLevel.getLevelNumber() == 2){
+            generateManySpheres(15);
+             
+        }else if(gameLevel.getLevelNumber() == 3){
+            generateManySpheres(20);
+             
+        }
+        
         this.levelNumber.setTextFill(Color.WHITE);
         row1.getChildren().add(levelNumber);
         stats.getChildren().add(row1);
