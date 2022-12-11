@@ -22,10 +22,8 @@ public class ShipChooser {
         Ships.add(ResourcesManager.SS1);
         Ships.add(ResourcesManager.SS2);
         Ships.add(ResourcesManager.SS3);
-        Ships.add(ResourcesManager.SS4);
-        
+        Ships.add(ResourcesManager.SS4);        
         return Ships;
-
     }
     
     public void initialize(){

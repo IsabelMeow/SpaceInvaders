@@ -49,7 +49,7 @@ public class ResourcesManager {
     public static final String Inv13 = ENEMY_FOLDER + "shipGreen_manned.png"; 
     public static final String Inv14 = ENEMY_FOLDER + "shipPink_manned.png"; 
     public static final String Inv15 = ENEMY_FOLDER + "shipYellow_manned.png"; 
-    public static final String explosion = ENEMY_FOLDER + "explosion.gif"; 
+    public static final String explosion = IMAGES_FOLDER + "explosion.gif"; 
             //keep
             // Sound effect files
    

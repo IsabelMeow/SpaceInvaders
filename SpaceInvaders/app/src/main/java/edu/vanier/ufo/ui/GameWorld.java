@@ -179,9 +179,15 @@ public class GameWorld extends GameEngine {
                 //getSceneNodes().getChildren().add(0, missile.getNode());
 
             } else if (event.getButton() == MouseButton.SECONDARY) {
-                // determine when all atoms are not on the game surface. Ship should be one sprite left.
-
-                // stop ship from moving forward
+                // Right mouse button click.
+                // determine when all atoms are not on the game surface. Ship should be the only sprite left.
+                // GAME OVER case!
+                if (getSpriteManager().getAllSprites().size() <= 1) {
+                    //TODO: change the number of sprites to be generated depending on the game level.
+                    //TODO: All sprites have beend destroyed. Genereate a new set of sprites.                    
+                    System.out.println("Game over or current level is over!");
+                }
+                // stop ship from moving forward               
                 this.gameLevel.getShip().applyTheBrakes(event.getX(), event.getY());
                 // move forward and rotate ship
                 this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), true);

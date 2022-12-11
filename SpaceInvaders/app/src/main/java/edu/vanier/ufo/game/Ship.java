@@ -197,8 +197,8 @@ public class Ship extends Sprite {
         firstShip.setVisible(true);
         setNode(flipBook);
         //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
-        flipBook.setTranslateX(435);
-        flipBook.setTranslateY(475);
+        //flipBook.setTranslateX(10);
+        //flipBook.setTranslateY(750);
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
         flipBook.setManaged(false);
@@ -239,11 +239,9 @@ public class Ship extends Sprite {
         firstShip.setVisible(true);
         setNode(flipBook);
 
-        flipBook.setTranslateX(350);
-        flipBook.setTranslateY(450);
-        
-      
-                
+       //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
+        flipBook.setTranslateX(745); 
+        flipBook.setTranslateY(740);    
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
         flipBook.setManaged(false);
