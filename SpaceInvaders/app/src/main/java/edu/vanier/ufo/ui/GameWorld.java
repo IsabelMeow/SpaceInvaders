@@ -313,7 +313,9 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
-
+         if(spriteA.intersects(spriteB)){          
+                return true;               
+            }     
         return false;
     }
 }

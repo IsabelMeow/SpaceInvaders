@@ -154,8 +154,6 @@ public abstract class GameEngine {
                     Shape intersect = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     if (spriteA instanceof Missile) {
                         Missile missile = ((Missile) spriteA); 
-                        missile.implode(this);
-                       
                         
                     }
                     // The break helps optimize the collisions
