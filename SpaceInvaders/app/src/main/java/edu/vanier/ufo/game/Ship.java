@@ -595,18 +595,22 @@ public class Ship extends Sprite {
 
         float slowDownAmt;
         int scaleBeginningMissle;
-        if (KeyCode.L == keyCode) {
-            fireMissile = this.getFireMissile();
+        
+        if (KeyCode.L == keyCode) {         
+            fireMissile = (new Missile(ResourcesManager.missile1)); 
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
+            
         } else if (KeyCode.P == keyCode) {
-            fireMissile = this.getFireMissile();
+            fireMissile = (new Missile(ResourcesManager.missile2)); 
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
+            
         } else if (KeyCode.O == keyCode) {
-            fireMissile = this.getFireMissile();
+            fireMissile = (new Missile(ResourcesManager.missile3)); 
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
+            
         } else {
 
             fireMissile = new Missile(ResourcesManager.missile3);

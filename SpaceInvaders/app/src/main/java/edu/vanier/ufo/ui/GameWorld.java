@@ -108,37 +108,36 @@ public class GameWorld extends GameEngine {
             this.gameLevel.getShip().changeWeapon(event.getCode());
             
             if (KeyCode.L == event.getCode()) {
-               
-                Missile missile = (new Missile(ResourcesManager.missile1)); 
-                this.gameLevel.getShip().setFireMissile(missile); 
-                this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile);
+
+                Missile missile1 = this.gameLevel.getShip().fire(); 
+                getSpriteManager().addSprites(missile1);
                 System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile.getNode()); 
+                getSceneNodes().getChildren().add(0, missile1.getNode()); 
                
                  getSoundManager().playSound("laser");
             }
              if (KeyCode.P == event.getCode()) {
                
-                Missile missile = (new Missile(ResourcesManager.missile2)); 
-                this.gameLevel.getShip().setFireMissile(missile);               
-                this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile);
+                          
+                Missile missile2 = this.gameLevel.getShip().fire(); 
+                getSpriteManager().addSprites(missile2);
                 System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile.getNode()); 
+                getSceneNodes().getChildren().add(0, missile2.getNode()); 
                
                  getSoundManager().playSound("laser");
             }
               if (KeyCode.O == event.getCode()) {
                
-                Missile missile = (new Missile(ResourcesManager.missile3)); 
-                this.gameLevel.getShip().setFireMissile(missile); 
+                Missile missile3 = this.gameLevel.getShip().fire(); 
+                //Missile missile = (new Missile(ResourcesManager.missile3)); 
+                this.gameLevel.getShip().setFireMissile(missile3); 
                 this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile);
+                getSpriteManager().addSprites(missile3);
                 System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile.getNode()); 
+                getSceneNodes().getChildren().add(0, missile3.getNode()); 
                
                  getSoundManager().playSound("laser");
+                 
             } else {
                   vkeys.put(event.getCode(), true); 
                   this.gameLevel.getShip().plotCourse(vkeys, true);
