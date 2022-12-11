@@ -66,7 +66,7 @@ public class GameWorld extends GameEngine {
         // Setup Game input
         setupInput(primaryStage);
 
-        // Create many spheres
+        // Create many spheres depending on current level
         generateManySpheres(5);
 
         getSpriteManager().addSprites(this.gameLevel.getShip());
@@ -182,6 +182,8 @@ public class GameWorld extends GameEngine {
         primaryStage.getScene().setOnMousePressed(fireOrMove1);
 
     
+        //Sprites that touch the shield are removed
+        
         
     }
 
