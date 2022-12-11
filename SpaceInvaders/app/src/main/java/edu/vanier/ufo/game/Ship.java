@@ -239,7 +239,7 @@ public class Ship extends Sprite {
         firstShip.setVisible(true);
         setNode(flipBook);
 
-       //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
+        //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
         flipBook.setTranslateX(745); 
         flipBook.setTranslateY(740);    
         flipBook.setCache(true);
@@ -591,7 +591,7 @@ public class Ship extends Sprite {
 
     public Missile fire() {
 
-        float slowDownAmt;
+        float slowDownAmt = 0;
         int scaleBeginningMissle;
         
         if (KeyCode.L == keyCode) {         

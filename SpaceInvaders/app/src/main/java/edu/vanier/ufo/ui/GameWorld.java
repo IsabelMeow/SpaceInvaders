@@ -225,10 +225,15 @@ public class GameWorld extends GameEngine {
             // random x between 0 to width of scene
             double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
 
+            // TODO: configure the size of the generated images.
+            // check for the right of the width newX is greater than width 
+            // minus radius times 2(width of sprite)
             if (newX > (gameSurface.getWidth() - (rnd.nextInt(15) + 5 * 2))) {
                 newX = gameSurface.getWidth() - (rnd.nextInt(15) + 5 * 2);
             }
 
+            // check for the bottom of screen the height newY is greater than height 
+            // minus radius times 2(height of sprite)
             double newY = rnd.nextInt((int) (gameSurface.getHeight() - 300));
             if (newY > (gameSurface.getHeight() - (rnd.nextInt(15) + 5 * 2))) {
                 newY = gameSurface.getHeight() - (rnd.nextInt(15) + 5 * 2);
@@ -275,6 +280,8 @@ public class GameWorld extends GameEngine {
     private void bounceOffWalls(Sprite sprite) {
         // bounce off the walls when outside of boundaries
 
+        //FIXME: The ship movement has got issues.
+        
         Node displayNode;
         if (sprite instanceof Ship) {
             displayNode = sprite.getNode();//((Ship)sprite).getCurrentShipImage();
@@ -333,9 +340,17 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
-         if(spriteA.intersects(spriteB)){          
-                return true;               
-            }     
+         if (spriteA != spriteB) {
+            if (spriteA.collide(spriteB)) {
+
+                if (spriteA != spaceShip) {
+                    spriteA.handleDeath(this);
+                }
+                if (spriteB != spaceShip) {
+                    spriteB.handleDeath(this);
+                }
+            }
+        }
         return false;
     }
 }
