@@ -16,6 +16,8 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.effect.Glow;
 
 /**
@@ -27,15 +29,20 @@ import javafx.scene.effect.Glow;
  */
 public class Ship extends Sprite {
 
-    private int lifeCount = 3;
+    private IntegerProperty lifeCount = new SimpleIntegerProperty(3);
 
-    public int getLifeCount() {
+    public IntegerProperty getlifeCount() {
         return lifeCount;
     }
 
-    public void setLifeCount(int lifeCount) {
-        this.lifeCount = lifeCount;
+    public void setlifeCount(int lifeCount) {
+        this.lifeCount.set(lifeCount);
     }
+
+    public void damaged() {
+        this.lifeCount.set(this.lifeCount.get() -1); 
+    }
+
 
     /**
      * 360 degree turn
@@ -602,26 +609,26 @@ public class Ship extends Sprite {
 
         if (KeyCode.L == keyCode) {
             fireMissile = (new Missile(ResourcesManager.missile1));
-            fireMissile.setDamageHP((int) (Math.random() * 10));
+            fireMissile.setDamageHP(10);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
 
         } else if (KeyCode.P == keyCode) {
             fireMissile = (new Missile(ResourcesManager.missile2));
-            fireMissile.setDamageHP((int) (Math.random() * 5));
+            fireMissile.setDamageHP(5);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
 
         } else if (KeyCode.O == keyCode) {
             fireMissile = (new Missile(ResourcesManager.missile3));
-            fireMissile.setDamageHP((int) (Math.random() * 15));
+            fireMissile.setDamageHP(15);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
 
         } else {
 
             fireMissile = new Missile(ResourcesManager.missile3);
-            fireMissile.setDamageHP((int) (Math.random() * 3));
+            fireMissile.setDamageHP(3);
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
         }

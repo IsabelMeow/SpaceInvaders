@@ -1,5 +1,6 @@
 package edu.vanier.ufo.engine;
 
+import edu.vanier.ufo.game.Atom;
 import java.util.*;
 
 /**
@@ -12,7 +13,7 @@ import java.util.*;
  * @author cdea
  */
 public class SpriteManager {
-
+    
     /**
      * All the sprite objects currently in play
      */
@@ -30,7 +31,19 @@ public class SpriteManager {
      * play.
      */
     private final static Set<Sprite> spritesToBeRemoved = new HashSet<>();
+    private final static List <Atom> atoms = new ArrayList<>(); 
 
+    
+    public void addAtoms (Atom atom){
+        atoms.add(atom); 
+    }
+    
+    public void removeAtom(Atom atom){
+        atoms.remove(atom); 
+    }
+    public static List <Atom> getAtoms(){
+        return atoms; 
+    }
     /**
      * Get the list of sprites.
      * @return a list of sprites.
@@ -111,5 +124,12 @@ public class SpriteManager {
 
         // reset the clean up sprites
         spritesToBeRemoved.clear();
+    }
+    
+     public  void clear(){
+       atoms.clear();
+       sprites.clear();
+       collisionList.clear();
+       spritesToBeRemoved.clear();
     }
 }
