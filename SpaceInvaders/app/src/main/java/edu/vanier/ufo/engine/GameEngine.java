@@ -1,9 +1,13 @@
 package edu.vanier.ufo.engine;
 
+import edu.vanier.ufo.game.Atom;
 import edu.vanier.ufo.game.Missile;
+import edu.vanier.ufo.game.Ship;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -26,6 +30,16 @@ import javafx.util.Duration;
  * @author cdea
  */
 public abstract class GameEngine {
+    private IntegerProperty score = new SimpleIntegerProperty(0);
+
+    public IntegerProperty getScore() {
+        return score;
+    }
+
+    public void setScore(IntegerProperty score) {
+        this.score = score;
+    }
+
 
     /**
      * The JavaFX Scene as the game surface
@@ -140,7 +154,7 @@ public abstract class GameEngine {
         
     }
     
-    protected void defeat(){
+    protected void lost(){
         
     }
     protected void checkCollisions() {
@@ -151,10 +165,37 @@ public abstract class GameEngine {
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 if (handleCollision(spriteA, spriteB)) {
-                    //Shape intersect = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
+                    Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     if (spriteA instanceof Missile) {
-                        //Missile missile = ((Missile) spriteA); 
+                        Missile missile = ((Missile) spriteA); 
+                        Atom atom = ((Atom) spriteB); 
+                        missile.implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
+                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
                         
+                        if (atom.getHealth() < 0) {
+                            getSpriteManager().removeAtom(atom);
+                            atom.implode(this, atom.getCenterX(), atom.getCenterY());
+                            getSpriteManager().addSpritesToBeRemoved(atom);
+                            score.set(score.get() + atom.getPoints());
+                            //points
+                            if (spriteManager.getAtoms().isEmpty()) {
+                                victory();
+                                
+                            }
+                            
+                            
+                        }
+                        
+                        getSpriteManager().addSpritesToBeRemoved(missile);
+                        if (spriteA instanceof Ship) {
+                            if (spriteB instanceof Atom) {
+                                Ship spaceShip = ((Ship) spriteA); 
+                                if (true) {
+                                    
+                                }
+                                
+                            }
+                        }
                     }
                     // The break helps optimize the collisions
                     //  The break statement means one object only hits another
