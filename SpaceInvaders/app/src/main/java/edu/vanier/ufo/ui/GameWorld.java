@@ -146,60 +146,11 @@ public class GameWorld extends GameEngine {
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
         HashMap <KeyCode, Boolean> vkeys = new HashMap(); 
+  
+               
+        //Weapons are changed successfully, shooting still weird
         
-        EventHandler fireOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
-            if (KeyCode.SPACE == event.getCode()) {
-                this.gameLevel.getShip().shieldToggle();
-                return;
-            }
-            this.gameLevel.getShip().changeWeapon(event.getCode());
-            
-            if (KeyCode.L == event.getCode()) {
-
-                Missile missile1 = this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile1);
-                System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile1.getNode()); 
-               
-                 getSoundManager().playSound("laser");
-            }
-             if (KeyCode.P == event.getCode()) {
-               
-                          
-                Missile missile2 = this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile2);
-                System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile2.getNode()); 
-               
-                 getSoundManager().playSound("laser");
-            }
-              if (KeyCode.O == event.getCode()) {
-               
-                Missile missile3 = this.gameLevel.getShip().fire(); 
-                //Missile missile = (new Missile(ResourcesManager.missile3)); 
-                this.gameLevel.getShip().setFireMissile(missile3); 
-                this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile3);
-                System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile3.getNode()); 
-               
-                 getSoundManager().playSound("laser");
-                 
-            } else {
-                  vkeys.put(event.getCode(), true); 
-                  this.gameLevel.getShip().plotCourse(vkeys, true);
-              }
-        
-        };
-        primaryStage.getScene().setOnKeyPressed(fireOrMove);
-        primaryStage.getScene().setOnKeyReleased(event -> {
-            vkeys.put(event.getCode(), false); 
-                  this.gameLevel.getShip().plotCourse(vkeys, false);
-        }); 
-                
-                
-                
-        EventHandler fireOrMove1 = (EventHandler<MouseEvent>) (MouseEvent event) -> {
+        EventHandler fireOrMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
             //mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
             if (event.getButton() == MouseButton.PRIMARY) {
 
@@ -207,18 +158,20 @@ public class GameWorld extends GameEngine {
                 this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), false);
 
                 //fire
-                Missile missile = this.gameLevel.getShip().fire();
-               getSpriteManager().addSprites(missile);
+                Missile missile = spaceShip.fire();
+                getSpriteManager().addSprites(missile);
 
                 // play sound
-                //getSoundManager().playSound("laser");
+                getSoundManager().playSound("laser");
 
-                //getSceneNodes().getChildren().add(0, missile.getNode());
+                getSceneNodes().getChildren().add(0, missile.getNode());
 
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 // Right mouse button click.
                 // determine when all atoms are not on the game surface. Ship should be the only sprite left.
                 // GAME OVER case!
+                
+                
                 if (getSpriteManager().getAllSprites().size() <= 1) {
                     //TODO: change the number of sprites to be generated depending on the game level.
                     //TODO: All sprites have beend destroyed. Genereate a new set of sprites.                    
@@ -229,11 +182,23 @@ public class GameWorld extends GameEngine {
                 // move forward and rotate ship
                 this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), true);
             }
+            
+            
         };
 
         // Initialize input
-        primaryStage.getScene().setOnMousePressed(fireOrMove1);
+        primaryStage.getScene().setOnMousePressed(fireOrMove);
+        //addEventHandler(MouseEvent.MOUSE_PRESSED, me);
 
+        // set up stats
+        EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
+            if (KeyCode.SPACE == event.getCode()) {
+                spaceShip.shieldToggle();
+                return;
+            }
+            spaceShip.changeWeapon(event.getCode());
+        };
+        primaryStage.getScene().setOnKeyPressed(changeWeapons);
 
         
     }
