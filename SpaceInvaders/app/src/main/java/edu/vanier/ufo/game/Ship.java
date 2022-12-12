@@ -663,7 +663,7 @@ public class Ship extends Sprite {
             RotatedShipImage shipImage = getCurrentShipImage();
             double x = shipImage.getBoundsInLocal().getWidth() / 2;
             double y = shipImage.getBoundsInLocal().getHeight() / 2;
-
+            
             // add shield
             shield = new Circle();
             shield.setRadius(65);
@@ -676,7 +676,6 @@ public class Ship extends Sprite {
             shield.setCenterY(y);
             shield.setOpacity(.9);
             setCollisionBounds(shield);
-            //--
             shieldFade = new FadeTransition();
             shieldFade.setFromValue(1);
             shieldFade.setToValue(.40);
