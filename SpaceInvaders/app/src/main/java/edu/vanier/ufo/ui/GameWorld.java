@@ -287,13 +287,10 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
         
         Node displayNode;
         if (sprite instanceof Ship) {
-            displayNode = sprite.getNode();
             //((Ship)sprite).getCurrentShipImage();
         } else {
             displayNode = sprite.getNode();
-        }
-        // Get the group node's X and Y but use the ImageView to obtain the width.
-        if (sprite.getNode().getTranslateX() > (getGameSurface().getWidth() - displayNode.getBoundsInParent().getWidth())
+              if (sprite.getNode().getTranslateX() > (getGameSurface().getWidth() - displayNode.getBoundsInParent().getWidth())
                 || displayNode.getTranslateX() < 0) {
 
             // bounce the opposite direction
@@ -304,6 +301,9 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
                 || sprite.getNode().getTranslateY() < 0) {
             sprite.setVelocityY(sprite.getVelocityY() * -1);
         }
+        }
+        // Get the group node's X and Y but use the ImageView to obtain the width.
+
     }
 
     /**
@@ -350,13 +350,13 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
                 getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
                 // play  explosion sound
                 getSoundManager().playSound("explosion");
-                if (spriteA != spaceShip) {                  
-                    spriteA.handleDeath(this); 
-                    
-                }
-                if (spriteB != spaceShip) {
-                    spriteB.handleDeath(this);
-                }               
+//                if (spriteA != spaceShip) {                  
+//                    spriteA.handleDeath(this); 
+//                    
+//                }
+//                if (spriteB != spaceShip) {
+//                    spriteB.handleDeath(this);
+//                }               
             }
         }
         return false;

@@ -339,11 +339,8 @@ public class Ship extends Sprite {
     public void update() {
         flipBook.setTranslateX(flipBook.getTranslateX() + vX);
         flipBook.setTranslateY(flipBook.getTranslateY() + vY);
+        System.out.println(vX + " " + vY);
 
-        if (stopArea.contains(getCenterX(), getCenterY())) {
-            vX = 0;
-            vY = 0;
-        }
     }
 
     private RotatedShipImage getCurrentShipImage() {
@@ -410,7 +407,7 @@ public class Ship extends Sprite {
             vY = 0;
 
         }
-
+        else{
         double atan2RadiansU = Math.atan2(u.y, u.x);
         double atan2DegreesU = Math.toDegrees(atan2RadiansU);
 
@@ -464,6 +461,7 @@ public class Ship extends Sprite {
         turnShip();
 
         u = v;
+        }
     }
 
     public void plotCourse(double screenX, double screenY, boolean thrust) {
