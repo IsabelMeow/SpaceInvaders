@@ -651,7 +651,7 @@ public class Ship extends Sprite {
             shield.setStrokeWidth(7);
             // add glowing effect to shield
             Glow glow = new Glow();
-            glow.setLevel(10);
+            glow.setLevel(25);
             shield.setEffect(glow);
             shield.setCenterX(x);
             shield.setCenterY(y);

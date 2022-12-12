@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.Random;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
+import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,7 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.Random;
-import javafx.scene.image.Image;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -44,127 +44,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.Random;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
+import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -190,7 +70,7 @@ public class GameWorld extends GameEngine {
 
     LevelSettings gameLevel;
     public Label levelNumber; 
-    Ship spaceShip; 
+    Ship spaceShip = new Ship(); 
     Atom invader;
     Missile missile;
     
@@ -228,10 +108,6 @@ public class GameWorld extends GameEngine {
         getSceneNodes().getChildren().add(0, this.gameLevel.getShip().getNode());
         // mouse point
         VBox stats = new VBox();
-
-        HBox row1 = new HBox();
-        gameLevel.setLevelNumber(1);
-        this.levelNumber.setText("Current Level: " + gameLevel.getLevelNumber());
         
         // Create many spheres depending on current level      
         if(gameLevel.getLevelNumber() == 1){
@@ -245,16 +121,45 @@ public class GameWorld extends GameEngine {
              
         }
         
-        this.levelNumber.setTextFill(Color.WHITE);
-        row1.getChildren().add(levelNumber);
-        stats.getChildren().add(row1);
-        
-       
         //TODO: Add the HUD here.
-        getSceneNodes().getChildren().add(0, stats);
-
-
-        // load sound files
+        //HUD that displays level, lives and score
+        
+        HBox row1 = new HBox();
+        gameLevel.setLevelNumber(1);
+        this.levelNumber.setText("Current Level: " + gameLevel.getLevelNumber());       
+        this.levelNumber.setTextFill(Color.WHITE);
+        this.levelNumber.setFont(new Font("Monospaced Bold", 13));
+        Glow glow1 = new Glow();
+        this.levelNumber.setEffect(glow1);
+        glow1.setLevel(15);      
+        row1.getChildren().add(levelNumber);
+        
+        HBox row2 = new HBox();
+        Label currentScore = new Label();
+        currentScore.setTextFill(Color.WHITE);
+        currentScore.setText("Current Score: ");
+        currentScore.setFont(new Font("Monospaced Bold", 13));       
+        Glow glow2 = new Glow();
+        currentScore.setEffect(glow2);
+        glow2.setLevel(15);
+        row2.getChildren().add(currentScore);
+        
+        HBox row3 = new HBox();
+        Label livesCounter = new Label();
+        livesCounter.setText("Remaining lives: ");
+        livesCounter.setTextFill(Color.WHITE);
+        livesCounter.setFont(new Font("Monospaced Bold", 13));
+        Glow glow3 = new Glow();
+        livesCounter.setEffect(glow3);
+        glow3.setLevel(15);
+        row3.getChildren().add(livesCounter);
+        
+        stats.getChildren().add(row1);
+        stats.getChildren().add(row2);
+        stats.getChildren().add(row3);
+        getSceneNodes().getChildren().add(stats);
+        
+// load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
     }
 
@@ -355,9 +260,7 @@ public class GameWorld extends GameEngine {
         // Initialize input
         primaryStage.getScene().setOnMousePressed(fireOrMove1);
 
-    
-        //Sprites that touch the shield are removed
-        
+
         
     }
 
@@ -510,7 +413,7 @@ public class GameWorld extends GameEngine {
                 }
                 if (spriteB != spaceShip) {
                     spriteB.handleDeath(this);
-                }
+                }               
             }
         }
         return false;
