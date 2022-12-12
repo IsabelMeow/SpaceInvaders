@@ -38,6 +38,7 @@ public class GameWorld extends GameEngine {
     public Label levelNumber; 
     Ship spaceShip = new Ship(); 
     Atom invader;
+    int nbOfSprites;
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -137,8 +138,8 @@ public class GameWorld extends GameEngine {
     
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
-HashMap <KeyCode, Boolean> keysHashMap = new HashMap(); 
-
+        HashMap <KeyCode, Boolean> keysHashMap = new HashMap(); 
+    
         //Weapons are changed successfully, shooting still weird    
                 
                 
@@ -151,7 +152,7 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
 
                 //fire
                 Missile missile = this.gameLevel.getShip().fire();
-               getSpriteManager().addSprites(missile);
+                getSpriteManager().addSprites(missile);
 
                 // play sound
                 getSoundManager().playSound("laser");
@@ -164,15 +165,20 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
                 // GAME OVER case!
                 if (getSpriteManager().getAllSprites().size() <= 1) {
                     //TODO: change the number of sprites to be generated depending on the game level.
-                    //TODO: All sprites have beend destroyed. Genereate a new set of sprites.                    
+                    //TODO: All sprites have beend destroyed. Genereate a new set of sprites.     
+                   
+                    
                     System.out.println("Game over or current level is over!");
                 }
                 // stop ship from moving forward               
                 this.gameLevel.getShip().applyTheBrakes(event.getX(), event.getY());
                 // move forward and rotate ship
-                this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), true);
+                //this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), true);
+            
             }
         };
+        
+        
 
         // Initialize input
         primaryStage.getScene().setOnMousePressed(fireOrMove);
@@ -185,7 +191,7 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
                 this.gameLevel.getShip().shieldToggle();
                 return;
             }
-            else {
+            else if(KeyCode.A == event.getCode() || KeyCode.D == event.getCode() || KeyCode.S == event.getCode() || KeyCode.W == event.getCode()){
                 keysHashMap.put(event.getCode(), true); 
                 this.gameLevel.getShip().plotCourse(keysHashMap, true);
             }
@@ -193,16 +199,11 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
         };
         primaryStage.getScene().setOnKeyPressed(changeWeaponsOrMove);
         primaryStage.getScene().setOnKeyReleased(event ->{
-            keysHashMap.put(event.getCode(), false); 
+           keysHashMap.put(event.getCode(), false); 
             this.gameLevel.getShip().plotCourse(keysHashMap, true);
         }
-        
-        
         );
         
-        
-        
-    
     }
 
     /**
@@ -252,7 +253,9 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
             atomImage.setManaged(false);
 
             // add to actors in play (sprite objects)
-            getSpriteManager().addSprites(atom);            
+            getSpriteManager().addSprites(atom);  
+            nbOfSprites = getSpriteManager().getAllSprites().size();
+            System.out.println(nbOfSprites);
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
         }
@@ -348,9 +351,9 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
             if (spriteA.collide(spriteB)) {
                 //load sound
                 getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
-              //   play  explosion sound
+                // play  explosion sound
                 getSoundManager().playSound("explosion");
-                if (spriteA != spaceShip) {                  
+               if (spriteA != spaceShip) {                  
                     spriteA.handleDeath(this); 
                     
                 }
