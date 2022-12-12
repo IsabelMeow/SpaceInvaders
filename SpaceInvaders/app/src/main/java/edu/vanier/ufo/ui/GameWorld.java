@@ -3,7 +3,6 @@ package edu.vanier.ufo.ui;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.*;
 import edu.vanier.ufo.game.*;
-import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
@@ -39,15 +38,7 @@ public class GameWorld extends GameEngine {
     Ship spaceShip = new Ship(); 
     Atom invader;
     Missile missile;
-    int score = 0;
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
+    
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -85,10 +76,10 @@ public class GameWorld extends GameEngine {
         
         // Create many spheres depending on current level      
         if(gameLevel.getLevelNumber() == 1){
-            generateManySpheres(5);
+            generateManySpheres(15);
             
         } else if(gameLevel.getLevelNumber() == 2){
-            generateManySpheres(15);
+            generateManySpheres(17);
              
         }else if(gameLevel.getLevelNumber() == 3){
             generateManySpheres(20);
@@ -111,7 +102,9 @@ public class GameWorld extends GameEngine {
         HBox row2 = new HBox();
         Label currentScore = new Label();
         currentScore.setTextFill(Color.WHITE); 
-        currentScore.setText("Current Score: " + score);
+        
+//currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
+        currentScore.setText("Current Score: " + getScore());
         currentScore.setFont(new Font("Monospaced Bold", 13.5));       
         Glow glow2 = new Glow();
         currentScore.setEffect(glow2);
@@ -120,7 +113,7 @@ public class GameWorld extends GameEngine {
         
         HBox row3 = new HBox();
         Label livesCounter = new Label();
-        livesCounter.setText("Remaining lives: " + spaceShip.getLifeCount());
+        livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow3 = new Glow();
@@ -222,7 +215,7 @@ public class GameWorld extends GameEngine {
             // Randomize the location of each newly generated atom.
             atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
             atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setHealth((int) (Math.random() * 7));
+            atom.setHealth(500);
             atom.setPoints(200);
 
             // random x between 0 to width of scene
