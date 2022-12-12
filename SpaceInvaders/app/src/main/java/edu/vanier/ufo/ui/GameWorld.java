@@ -3,11 +3,25 @@ package edu.vanier.ufo.ui;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.*;
 import edu.vanier.ufo.game.*;
+import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;;
+import javafx.scene.effect.Glow;
+import javafx.scene.text.Font;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import java.util.Random;
+import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
@@ -138,14 +152,13 @@ public class GameWorld extends GameEngine {
     
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
-<<<<<<< HEAD
+
         HashMap <KeyCode, Boolean> vkeys = new HashMap(); 
-=======
+
        
   
                
         //Weapons are changed successfully, shooting still weird
->>>>>>> 436324d4999f11260884e5412316332e4a3a9ece
         
         EventHandler fireOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
@@ -234,8 +247,7 @@ public class GameWorld extends GameEngine {
         // Initialize input
         primaryStage.getScene().setOnMousePressed(fireOrMove1);
 
-<<<<<<< HEAD
-=======
+
         // set up stats
         EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
@@ -246,9 +258,7 @@ public class GameWorld extends GameEngine {
             spaceShip.changeWeapon(event.getCode());
         };
         primaryStage.getScene().setOnKeyPressed(changeWeapons);
->>>>>>> 436324d4999f11260884e5412316332e4a3a9ece
-
-        
+    
     }
 
     /**

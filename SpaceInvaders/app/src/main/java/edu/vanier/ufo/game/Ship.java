@@ -16,12 +16,10 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-<<<<<<< HEAD
-=======
+import javafx.scene.effect.Glow;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
->>>>>>> 436324d4999f11260884e5412316332e4a3a9ece
-import javafx.scene.effect.Glow;
+
 
 /**
  * A spaceship with 32 directions When two atoms collide each will fade and
@@ -605,68 +603,10 @@ public class Ship extends Sprite {
         this.fireMissile = fireMissile;
     }
 
-    public Missile fire() {
-
-<<<<<<< HEAD
-        float slowDownAmt = 0;
-        int scaleBeginningMissle;
-        
-        if (KeyCode.L == keyCode) {         
-            fireMissile = (new Missile(ResourcesManager.missile1)); 
-=======
-        float slowDownAmt;
-        int scaleBeginningMissle;
-
-        if (KeyCode.L == keyCode) {
-            fireMissile = (new Missile(ResourcesManager.missile1));
-            fireMissile.setDamageHP(10);
->>>>>>> 436324d4999f11260884e5412316332e4a3a9ece
-            slowDownAmt = 1.3f;
-            scaleBeginningMissle = 11;
-
-        } else if (KeyCode.P == keyCode) {
-            fireMissile = (new Missile(ResourcesManager.missile2));
-            fireMissile.setDamageHP(5);
-            slowDownAmt = 1.3f;
-            scaleBeginningMissle = 11;
-
-        } else if (KeyCode.O == keyCode) {
-            fireMissile = (new Missile(ResourcesManager.missile3));
-            fireMissile.setDamageHP(15);
-            slowDownAmt = 1.3f;
-            scaleBeginningMissle = 11;
-
-        } else {
-
-            fireMissile = new Missile(ResourcesManager.missile3);
-            fireMissile.setDamageHP(3);
-            slowDownAmt = 1.3f;
-            scaleBeginningMissle = 11;
-        }
-
-        //fireMissile.setPosition(getNode().getLayoutX()+ 10, getNode().getLayoutY() - 20);
-        // velocity vector of the missile
-        fireMissile.setVelocityX(Math.cos(Math.toRadians(uIndex * UNIT_ANGLE_PER_FRAME)) * (MISSILE_THRUST_AMOUNT - slowDownAmt));
-        fireMissile.setVelocityY(Math.sin(Math.toRadians(-vIndex * UNIT_ANGLE_PER_FRAME)) * (MISSILE_THRUST_AMOUNT - slowDownAmt));
-
-        // make the missile launch in the direction of the current direction of the ship nose. based on the
-        // current frame (uIndex) into the list of image view nodes.
-        RotatedShipImage shipImage = directionalShips.get(uIndex);
-
-        // start to appear in the center of the ship to come out the direction of the nose of the ship.
-        double offsetX = (shipImage.getBoundsInLocal().getWidth() - fireMissile.getNode().getBoundsInLocal().getWidth()) / 2;
-        double offsetY = (shipImage.getBoundsInLocal().getHeight() - fireMissile.getNode().getBoundsInLocal().getHeight()) / 2;
-
-        // initial launch of the missile   (multiply vector by 4 makes it appear at the nose of the ship)
-        fireMissile.getNode().setTranslateX(getNode().getTranslateX() + (offsetX + (fireMissile.getVelocityX() * scaleBeginningMissle)));
-        fireMissile.getNode().setTranslateY(getNode().getTranslateY() + (offsetY + (fireMissile.getVelocityY() * scaleBeginningMissle)));
-        return fireMissile;
-    }
-
     public void changeWeapon(KeyCode keyCode) {
         this.keyCode = keyCode;
     }
-
+    
     public void shieldToggle() {
         if (shield == null) {
             RotatedShipImage shipImage = getCurrentShipImage();
@@ -725,4 +665,60 @@ public class Ship extends Sprite {
             setCollisionBounds(hitBounds);
         }
     }
+    
+    public Missile fire() {
+
+        float slowDownAmt = 0;
+        int scaleBeginningMissle;
+        
+
+        if (KeyCode.L == keyCode) {
+            fireMissile = (new Missile(ResourcesManager.missile1));
+            fireMissile.setDamageHP(10);
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
+
+        } else if (KeyCode.P == keyCode) {
+            fireMissile = (new Missile(ResourcesManager.missile2));
+            fireMissile.setDamageHP(5);
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
+
+        } else if (KeyCode.O == keyCode) {
+            fireMissile = (new Missile(ResourcesManager.missile3));
+            fireMissile.setDamageHP(15);
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
+
+        } else {
+
+            fireMissile = new Missile(ResourcesManager.missile3);
+            fireMissile.setDamageHP(3);
+            slowDownAmt = 1.3f;
+            scaleBeginningMissle = 11;
+        }
+
+        //fireMissile.setPosition(getNode().getLayoutX()+ 10, getNode().getLayoutY() - 20);
+        // velocity vector of the missile
+        fireMissile.setVelocityX(Math.cos(Math.toRadians(uIndex * UNIT_ANGLE_PER_FRAME)) * (MISSILE_THRUST_AMOUNT - slowDownAmt));
+        fireMissile.setVelocityY(Math.sin(Math.toRadians(-vIndex * UNIT_ANGLE_PER_FRAME)) * (MISSILE_THRUST_AMOUNT - slowDownAmt));
+
+        // make the missile launch in the direction of the current direction of the ship nose. based on the
+        // current frame (uIndex) into the list of image view nodes.
+        RotatedShipImage shipImage = directionalShips.get(uIndex);
+
+        // start to appear in the center of the ship to come out the direction of the nose of the ship.
+        double offsetX = (shipImage.getBoundsInLocal().getWidth() - fireMissile.getNode().getBoundsInLocal().getWidth()) / 2;
+        double offsetY = (shipImage.getBoundsInLocal().getHeight() - fireMissile.getNode().getBoundsInLocal().getHeight()) / 2;
+
+        // initial launch of the missile   (multiply vector by 4 makes it appear at the nose of the ship)
+        fireMissile.getNode().setTranslateX(getNode().getTranslateX() + (offsetX + (fireMissile.getVelocityX() * scaleBeginningMissle)));
+        fireMissile.getNode().setTranslateY(getNode().getTranslateY() + (offsetY + (fireMissile.getVelocityY() * scaleBeginningMissle)));
+        return fireMissile;
+    }
+
+
+
+    
+
 }
