@@ -463,6 +463,7 @@ public class Ship extends Sprite {
         u = v;
     }
 
+    
     public void plotCourse(double screenX, double screenY, boolean thrust) {
         // get center of ship
         double sx = getCenterX();
@@ -529,6 +530,7 @@ public class Ship extends Sprite {
         u = v;
     }
 
+    
     private void turnShip() {
 
         final Duration oneFrameAmt = Duration.millis(MILLIS_PER_FRAME);
@@ -593,15 +595,8 @@ public class Ship extends Sprite {
         stopArea.setCenterX(screenX);
         stopArea.setCenterY(screenY);
     }
-    private Missile fireMissile;
 
-    public Missile getFireMissile() {
-        return fireMissile;
-    }
 
-    public void setFireMissile(Missile fireMissile) {
-        this.fireMissile = fireMissile;
-    }
 
     public void changeWeapon(KeyCode keyCode) {
         this.keyCode = keyCode;
@@ -668,6 +663,7 @@ public class Ship extends Sprite {
     
     public Missile fire() {
 
+        Missile fireMissile;
         float slowDownAmt = 0;
         int scaleBeginningMissle;
         
@@ -717,8 +713,5 @@ public class Ship extends Sprite {
         return fireMissile;
     }
 
-
-
-    
 
 }

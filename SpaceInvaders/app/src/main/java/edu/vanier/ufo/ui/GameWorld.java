@@ -51,8 +51,6 @@ public class GameWorld extends GameEngine {
     public Label levelNumber; 
     Ship spaceShip = new Ship(); 
     Atom invader;
-    Missile missile;
-    
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -155,64 +153,11 @@ public class GameWorld extends GameEngine {
 
         HashMap <KeyCode, Boolean> vkeys = new HashMap(); 
 
-       
-  
-               
-        //Weapons are changed successfully, shooting still weird
-        
-        EventHandler fireOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
-            if (KeyCode.SPACE == event.getCode()) {
-                this.gameLevel.getShip().shieldToggle();
-                return;
-            }
-            this.gameLevel.getShip().changeWeapon(event.getCode());
-            
-            if (KeyCode.L == event.getCode()) {
 
-                Missile missile1 = this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile1);
-                System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile1.getNode()); 
-               
-                 getSoundManager().playSound("laser");
-            }
-             if (KeyCode.P == event.getCode()) {
-               
-                          
-                Missile missile2 = this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile2);
-                System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile2.getNode()); 
-               
-                 getSoundManager().playSound("laser");
-            }
-              if (KeyCode.O == event.getCode()) {
-               
-                Missile missile3 = this.gameLevel.getShip().fire(); 
-                //Missile missile = (new Missile(ResourcesManager.missile3)); 
-                this.gameLevel.getShip().setFireMissile(missile3); 
-                this.gameLevel.getShip().fire(); 
-                getSpriteManager().addSprites(missile3);
-                System.out.println("Created missile");
-                getSceneNodes().getChildren().add(0, missile3.getNode()); 
-               
-                 getSoundManager().playSound("laser");
-                 
-            } else {
-                  vkeys.put(event.getCode(), true); 
-                  this.gameLevel.getShip().plotCourse(vkeys, true);
-              }
-        
-        };
-        primaryStage.getScene().setOnKeyPressed(fireOrMove);
-        primaryStage.getScene().setOnKeyReleased(event -> {
-            vkeys.put(event.getCode(), false); 
-                  this.gameLevel.getShip().plotCourse(vkeys, false);
-        }); 
+        //Weapons are changed successfully, shooting still weird    
                 
                 
-                
-        EventHandler fireOrMove1 = (EventHandler<MouseEvent>) (MouseEvent event) -> {
+        EventHandler fireOrMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
             //mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
             if (event.getButton() == MouseButton.PRIMARY) {
 
@@ -224,9 +169,9 @@ public class GameWorld extends GameEngine {
                getSpriteManager().addSprites(missile);
 
                 // play sound
-                //getSoundManager().playSound("laser");
+                getSoundManager().playSound("laser");
 
-                //getSceneNodes().getChildren().add(0, missile.getNode());
+                getSceneNodes().getChildren().add(0, missile.getNode());
 
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 // Right mouse button click.
@@ -245,7 +190,7 @@ public class GameWorld extends GameEngine {
         };
 
         // Initialize input
-        primaryStage.getScene().setOnMousePressed(fireOrMove1);
+        primaryStage.getScene().setOnMousePressed(fireOrMove);
 
 
         // set up stats
