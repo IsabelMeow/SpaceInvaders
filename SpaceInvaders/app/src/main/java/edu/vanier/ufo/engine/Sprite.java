@@ -17,6 +17,7 @@ public abstract class Sprite {
     private double height;
     public boolean isDead = false;
 
+
     protected Node collidingNode;
 
     public Sprite() {
@@ -134,5 +135,6 @@ public abstract class Sprite {
 
     public void handleDeath(GameEngine gameWorld) {
         gameWorld.getSpriteManager().addSpritesToBeRemoved(this);
+        
     }
 }

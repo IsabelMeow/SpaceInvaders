@@ -73,7 +73,7 @@ public class GameWorld extends GameEngine {
     Ship spaceShip = new Ship(); 
     Atom invader;
     Missile missile;
-    
+    int score = 0;
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -128,7 +128,7 @@ public class GameWorld extends GameEngine {
         gameLevel.setLevelNumber(1);
         this.levelNumber.setText("Current Level: " + gameLevel.getLevelNumber());       
         this.levelNumber.setTextFill(Color.WHITE);
-        this.levelNumber.setFont(new Font("Monospaced Bold", 13));
+        this.levelNumber.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow1 = new Glow();
         this.levelNumber.setEffect(glow1);
         glow1.setLevel(15);      
@@ -136,9 +136,9 @@ public class GameWorld extends GameEngine {
         
         HBox row2 = new HBox();
         Label currentScore = new Label();
-        currentScore.setTextFill(Color.WHITE);
-        currentScore.setText("Current Score: ");
-        currentScore.setFont(new Font("Monospaced Bold", 13));       
+        currentScore.setTextFill(Color.WHITE); 
+        currentScore.setText("Current Score: " + score);
+        currentScore.setFont(new Font("Monospaced Bold", 13.5));       
         Glow glow2 = new Glow();
         currentScore.setEffect(glow2);
         glow2.setLevel(15);
@@ -146,9 +146,9 @@ public class GameWorld extends GameEngine {
         
         HBox row3 = new HBox();
         Label livesCounter = new Label();
-        livesCounter.setText("Remaining lives: ");
+        livesCounter.setText("Remaining lives: " + spaceShip.getLifeCount());
         livesCounter.setTextFill(Color.WHITE);
-        livesCounter.setFont(new Font("Monospaced Bold", 13));
+        livesCounter.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow3 = new Glow();
         livesCounter.setEffect(glow3);
         glow3.setLevel(15);
@@ -159,7 +159,7 @@ public class GameWorld extends GameEngine {
         stats.getChildren().add(row3);
         getSceneNodes().getChildren().add(stats);
         
-// load sound files
+        // load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
     }
 
@@ -403,13 +403,13 @@ public class GameWorld extends GameEngine {
         //TODO: implement collision detection here.
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
-
                 //load sound
                 getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
                 // play  explosion sound
                 getSoundManager().playSound("explosion");
                 if (spriteA != spaceShip) {                  
-                    spriteA.handleDeath(this);
+                    spriteA.handleDeath(this); 
+                    
                 }
                 if (spriteB != spaceShip) {
                     spriteB.handleDeath(this);

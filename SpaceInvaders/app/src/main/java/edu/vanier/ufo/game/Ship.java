@@ -27,15 +27,17 @@ import javafx.scene.effect.Glow;
  */
 public class Ship extends Sprite {
 
-    private double lifeCount = 3;
+    private int lifeCount = 3;
 
-    public double getLifeCount() {
+    public int getLifeCount() {
         return lifeCount;
     }
 
-    public void setLifeCount(double lifeCount) {
+    public void setLifeCount(int lifeCount) {
         this.lifeCount = lifeCount;
     }
+  
+    
 
     /**
      * 360 degree turn
