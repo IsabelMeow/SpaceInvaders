@@ -190,18 +190,30 @@ public abstract class GameEngine {
                         if (spriteA instanceof Ship) {
                             if (spriteB instanceof Atom) {
                                 Ship spaceShip = ((Ship) spriteA); 
-                                if (true) {
+                                if (!spaceShip.isShieldOn()) {
+                                    spaceShip.damaged();
                                     
                                 }
+                                else {
+                                    spaceShip.setShieldOn(false); //removing shield since boom
+                                    spaceShip.collidingNode.setOpacity(0);
+                                }
                                 
+                                ((Atom) spriteB).implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
+                                getSpriteManager().addSpritesToBeRemoved(spriteB);
+                                getSpriteManager().removeAtom((Atom) spriteB);
+                                if (spriteManager.getAtoms().isEmpty()) {
+                                    victory();
+                                }
+                                if (spaceShip.getlifeCount().get() == 0) {
+                                    spaceShip.isDead = true; 
+                                    lost(); 
+                                    
+                                }
                             }
                         }
                     }
-                    // The break helps optimize the collisions
-                    //  The break statement means one object only hits another
-                    // object as opposed to one hitting many objects.
-                    // To be more accurate comment out the break statement.
-                    break;
+                  
                 }
             }
         }

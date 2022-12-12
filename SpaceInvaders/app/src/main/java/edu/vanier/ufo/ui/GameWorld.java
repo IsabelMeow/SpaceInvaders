@@ -103,7 +103,7 @@ public class GameWorld extends GameEngine {
         currentScore.setTextFill(Color.WHITE); 
         
         //currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
-        currentScore.setText("Current Score: " + getScore());
+        currentScore.setText("Current Score: " + getScore().get());
         currentScore.setFont(new Font("Monospaced Bold", 13.5));       
         Glow glow2 = new Glow();
         currentScore.setEffect(glow2);
@@ -112,7 +112,7 @@ public class GameWorld extends GameEngine {
         
         HBox row3 = new HBox();
         Label livesCounter = new Label();
-        livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount());
+        livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow3 = new Glow();
@@ -347,16 +347,16 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
                 //load sound
-                //getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
-                // play  explosion sound
-                //getSoundManager().playSound("explosion");
-//                if (spriteA != spaceShip) {                  
-//                    spriteA.handleDeath(this); 
-//                    
-//                }
-//                if (spriteB != spaceShip) {
-//                    spriteB.handleDeath(this);
-//                }               
+                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
+              //   play  explosion sound
+                getSoundManager().playSound("explosion");
+                if (spriteA != spaceShip) {                  
+                    spriteA.handleDeath(this); 
+                    
+                }
+                if (spriteB != spaceShip) {
+                    spriteB.handleDeath(this);
+                }               
             }
         }
         return false;

@@ -149,6 +149,14 @@ public class Ship extends Sprite {
      */
     private boolean shieldOn;
 
+    public boolean isShieldOn() {
+        return shieldOn;
+    }
+
+    public void setShieldOn(boolean shieldOn) {
+        this.shieldOn = shieldOn;
+    }
+
     /**
      * Green shield to be used as collision bounds.
      */
