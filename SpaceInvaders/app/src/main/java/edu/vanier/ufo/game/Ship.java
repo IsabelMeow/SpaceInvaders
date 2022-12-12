@@ -16,9 +16,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javafx.event.EventHandler;
 import javafx.scene.effect.Glow;
-import javafx.scene.input.KeyEvent;
 
 /**
  * A spaceship with 32 directions When two atoms collide each will fade and
@@ -583,15 +581,21 @@ public class Ship extends Sprite {
         stopArea.setCenterX(screenX);
         stopArea.setCenterY(screenY);
     }
+    private Missile fireMissile;
 
+    public Missile getFireMissile() {
+        return fireMissile;
+    }
 
-   
+    public void setFireMissile(Missile fireMissile) {
+        this.fireMissile = fireMissile;
+    }
+
     public Missile fire() {
 
-        Missile fireMissile;       
         float slowDownAmt = 0;
         int scaleBeginningMissle;
-
+        
         if (KeyCode.L == keyCode) {         
             fireMissile = (new Missile(ResourcesManager.missile1)); 
             slowDownAmt = 1.3f;
