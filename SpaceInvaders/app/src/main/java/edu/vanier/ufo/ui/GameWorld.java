@@ -347,9 +347,9 @@ HashMap <KeyCode, Boolean> keysHashMap = new HashMap();
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
                 //load sound
-                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
+                //getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
                 // play  explosion sound
-                getSoundManager().playSound("explosion");
+                //getSoundManager().playSound("explosion");
 //                if (spriteA != spaceShip) {                  
 //                    spriteA.handleDeath(this); 
 //                    
