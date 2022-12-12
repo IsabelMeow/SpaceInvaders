@@ -196,11 +196,11 @@ public class GameWorld extends GameEngine {
         // set up stats
         EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
-                System.out.println("Shield toggle on");
+                System.out.println("Shield toggle on!");
                 this.gameLevel.getShip().shieldToggle();
                 return;
             }
-            spaceShip.changeWeapon(event.getCode());
+            this.gameLevel.getShip().changeWeapon(event.getCode());
         };
         primaryStage.getScene().setOnKeyPressed(changeWeapons);
     
@@ -253,8 +253,7 @@ public class GameWorld extends GameEngine {
             atomImage.setManaged(false);
 
             // add to actors in play (sprite objects)
-            getSpriteManager().addSprites(atom);
-
+            getSpriteManager().addSprites(atom);            
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
         }
