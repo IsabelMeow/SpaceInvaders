@@ -137,9 +137,7 @@ public class GameWorld extends GameEngine {
     
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
-
-        HashMap <KeyCode, Boolean> vkeys = new HashMap(); 
-
+HashMap <KeyCode, Boolean> keysHashMap = new HashMap(); 
 
         //Weapons are changed successfully, shooting still weird    
                 
@@ -181,15 +179,29 @@ public class GameWorld extends GameEngine {
 
 
         // set up stats
-        EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
+        EventHandler changeWeaponsOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
                 System.out.println("Shield toggle on!");
                 this.gameLevel.getShip().shieldToggle();
                 return;
             }
+            else {
+                keysHashMap.put(event.getCode(), true); 
+                this.gameLevel.getShip().plotCourse(keysHashMap, true);
+            }
             this.gameLevel.getShip().changeWeapon(event.getCode());
         };
-        primaryStage.getScene().setOnKeyPressed(changeWeapons);
+        primaryStage.getScene().setOnKeyPressed(changeWeaponsOrMove);
+        primaryStage.getScene().setOnKeyReleased(event ->{
+            keysHashMap.put(event.getCode(), false); 
+            this.gameLevel.getShip().plotCourse(keysHashMap, true);
+        }
+        
+        
+        );
+        
+        
+        
     
     }
 

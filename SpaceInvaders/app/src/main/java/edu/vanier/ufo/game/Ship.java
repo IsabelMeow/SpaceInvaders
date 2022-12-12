@@ -20,7 +20,6 @@ import javafx.scene.effect.Glow;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-
 /**
  * A spaceship with 32 directions When two atoms collide each will fade and
  * become removed from the scene. The method called implode() implements a fade
@@ -41,9 +40,8 @@ public class Ship extends Sprite {
     }
 
     public void damaged() {
-        this.lifeCount.set(this.lifeCount.get() -1); 
+        this.lifeCount.set(this.lifeCount.get() - 1);
     }
-
 
     /**
      * 360 degree turn
@@ -392,17 +390,20 @@ public class Ship extends Sprite {
             u = new CustomVector(1, 0);
         }
         int x = 0;
-        if (keysMap.getOrDefault(KeyCode.A, false)) 
-            x -= 1;
-        if (keysMap.getOrDefault(KeyCode.D, false)) 
-            x += 1;
-
         int y = 0;
-        if (keysMap.getOrDefault(KeyCode.S, false)) 
+        if (keysMap.getOrDefault(KeyCode.A, false)) {
+            x -= 1;
+        }
+        if (keysMap.getOrDefault(KeyCode.D, false)) {
+            x += 1;
+        }
+        
+        if (keysMap.getOrDefault(KeyCode.S, false)) {
             y -= 1;
-        if (keysMap.getOrDefault(KeyCode.W, false)) 
+        }
+        if (keysMap.getOrDefault(KeyCode.W, false)) {
             y += 1;
-
+        }
         CustomVector v = new CustomVector(x, y);
         if (v.x == 0 && v.y == 0) {
             vX = 0;
@@ -465,7 +466,6 @@ public class Ship extends Sprite {
         u = v;
     }
 
-    
     public void plotCourse(double screenX, double screenY, boolean thrust) {
         // get center of ship
         double sx = getCenterX();
@@ -532,7 +532,6 @@ public class Ship extends Sprite {
         u = v;
     }
 
-    
     private void turnShip() {
 
         final Duration oneFrameAmt = Duration.millis(MILLIS_PER_FRAME);
@@ -598,19 +597,15 @@ public class Ship extends Sprite {
         stopArea.setCenterY(screenY);
     }
 
-
-
     public void changeWeapon(KeyCode keyCode) {
         this.keyCode = keyCode;
     }
 
-    
     public Missile fire() {
 
         Missile fireMissile;
         float slowDownAmt = 0;
         int scaleBeginningMissle;
-        
 
         if (KeyCode.L == keyCode) {
             fireMissile = (new Missile(ResourcesManager.missile1));
@@ -657,7 +652,6 @@ public class Ship extends Sprite {
         return fireMissile;
     }
 
-    
     public void shieldToggle() {
         if (shield == null) {
             RotatedShipImage shipImage = getCurrentShipImage();
@@ -684,24 +678,23 @@ public class Ship extends Sprite {
             shieldFade.setCycleCount(12);
             shieldFade.setAutoReverse(true);
             shieldFade.setNode(shield);
-            
+
             // add changing colors to shield
             shieldRainbow = new StrokeTransition(Duration.millis(1000), shield, Color.FLORALWHITE, Color.FUCHSIA);
             shieldRainbow.setCycleCount(12);
             shieldRainbow.setAutoReverse(true);
-            
+
             shieldFade.setOnFinished((ActionEvent actionEvent) -> {
                 shieldOn = false;
                 flipBook.getChildren().remove(shield);
                 shieldFade.stop();
                 shieldRainbow.stop();
-                
+
                 setCollisionBounds(hitBounds);
             });
             shieldFade.playFromStart();
             shieldRainbow.playFromStart();
 
-            
         }
         shieldOn = !shieldOn;
         if (shieldOn) {
