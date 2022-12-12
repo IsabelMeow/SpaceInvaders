@@ -171,6 +171,7 @@ public class Ship extends Sprite {
      */
     private Circle hitBounds;
 
+    //Ship with default image
     public Ship() {
         // Load one image.
         Image shipImage;
@@ -214,6 +215,7 @@ public class Ship extends Sprite {
         initHitZone();
     }
 
+    //Ship with chosen image depending on level
     public Ship(Image shipImage) {
         // Load one image.
 
@@ -601,65 +603,7 @@ public class Ship extends Sprite {
     public void changeWeapon(KeyCode keyCode) {
         this.keyCode = keyCode;
     }
-    
-    public void shieldToggle() {
-        if (shield == null) {
-            RotatedShipImage shipImage = getCurrentShipImage();
-            double x = shipImage.getBoundsInLocal().getWidth() / 2;
-            double y = shipImage.getBoundsInLocal().getHeight() / 2;
 
-            // add shield
-            shield = new Circle();
-            shield.setRadius(65);
-            shield.setStrokeWidth(7);
-            // add glowing effect to shield
-            Glow glow = new Glow();
-            glow.setLevel(25);
-            shield.setEffect(glow);
-            shield.setCenterX(x);
-            shield.setCenterY(y);
-            shield.setOpacity(.9);
-            setCollisionBounds(shield);
-            //--
-            shieldFade = new FadeTransition();
-            shieldFade.setFromValue(1);
-            shieldFade.setToValue(.40);
-            shieldFade.setDuration(Duration.millis(1000));
-            shieldFade.setCycleCount(12);
-            shieldFade.setAutoReverse(true);
-            shieldFade.setNode(shield);
-
-            // add changing colors to shield
-            shieldRainbow = new StrokeTransition(Duration.millis(1000), shield, Color.FLORALWHITE, Color.FUCHSIA);
-            shieldRainbow.setCycleCount(12);
-            shieldRainbow.setAutoReverse(true);
-
-            shieldFade.setOnFinished((ActionEvent actionEvent) -> {
-                shieldOn = false;
-                flipBook.getChildren().remove(shield);
-                shieldFade.stop();
-                shieldRainbow.stop();
-
-                setCollisionBounds(hitBounds);
-            });
-            shieldFade.playFromStart();
-            shieldRainbow.playFromStart();
-
-        }
-        shieldOn = !shieldOn;
-        if (shieldOn) {
-            setCollisionBounds(shield);
-            flipBook.getChildren().add(0, shield);
-            shieldFade.playFromStart();
-            shieldRainbow.playFromStart();
-
-        } else {
-            flipBook.getChildren().remove(shield);
-            shieldFade.stop();
-            shieldRainbow.stop();
-            setCollisionBounds(hitBounds);
-        }
-    }
     
     public Missile fire() {
 
@@ -713,5 +657,65 @@ public class Ship extends Sprite {
         return fireMissile;
     }
 
+    
+    public void shieldToggle() {
+        if (shield == null) {
+            RotatedShipImage shipImage = getCurrentShipImage();
+            double x = shipImage.getBoundsInLocal().getWidth() / 2;
+            double y = shipImage.getBoundsInLocal().getHeight() / 2;
+
+            // add shield
+            shield = new Circle();
+            shield.setRadius(65);
+            shield.setStrokeWidth(7);
+            // add glowing effect to shield
+            Glow glow = new Glow();
+            glow.setLevel(10);
+            shield.setEffect(glow);
+            shield.setCenterX(x);
+            shield.setCenterY(y);
+            shield.setOpacity(.9);
+            setCollisionBounds(shield);
+            //--
+            shieldFade = new FadeTransition();
+            shieldFade.setFromValue(1);
+            shieldFade.setToValue(.40);
+            shieldFade.setDuration(Duration.millis(1000));
+            shieldFade.setCycleCount(12);
+            shieldFade.setAutoReverse(true);
+            shieldFade.setNode(shield);
+            
+            // add changing colors to shield
+            shieldRainbow = new StrokeTransition(Duration.millis(1000), shield, Color.FLORALWHITE, Color.FUCHSIA);
+            shieldRainbow.setCycleCount(12);
+            shieldRainbow.setAutoReverse(true);
+            
+            shieldFade.setOnFinished((ActionEvent actionEvent) -> {
+                shieldOn = false;
+                flipBook.getChildren().remove(shield);
+                shieldFade.stop();
+                shieldRainbow.stop();
+                
+                setCollisionBounds(hitBounds);
+            });
+            shieldFade.playFromStart();
+            shieldRainbow.playFromStart();
+
+            
+        }
+        shieldOn = !shieldOn;
+        if (shieldOn) {
+            setCollisionBounds(shield);
+            flipBook.getChildren().add(0, shield);
+            shieldFade.playFromStart();
+            shieldRainbow.playFromStart();
+
+        } else {
+            flipBook.getChildren().remove(shield);
+            shieldFade.stop();
+            shieldRainbow.stop();
+            setCollisionBounds(hitBounds);
+        }
+    }
 
 }

@@ -115,7 +115,7 @@ public class GameWorld extends GameEngine {
         Label currentScore = new Label();
         currentScore.setTextFill(Color.WHITE); 
         
-//currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
+        //currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
         currentScore.setText("Current Score: " + getScore());
         currentScore.setFont(new Font("Monospaced Bold", 13.5));       
         Glow glow2 = new Glow();
@@ -197,7 +197,7 @@ public class GameWorld extends GameEngine {
         EventHandler changeWeapons = (EventHandler<KeyEvent>) (KeyEvent event) -> {
             if (KeyCode.SPACE == event.getCode()) {
                 System.out.println("Shield toggle on");
-                spaceShip.shieldToggle();
+                this.gameLevel.getShip().shieldToggle();
                 return;
             }
             spaceShip.changeWeapon(event.getCode());
