@@ -36,8 +36,6 @@ public class Ship extends Sprite {
     public void setLifeCount(int lifeCount) {
         this.lifeCount = lifeCount;
     }
-  
-    
 
     /**
      * 360 degree turn
@@ -242,8 +240,8 @@ public class Ship extends Sprite {
         setNode(flipBook);
 
         //Modified setTranslateX and Y so that the ship is initially situated at the bottom middle
-        flipBook.setTranslateX(745); 
-        flipBook.setTranslateY(740);    
+        flipBook.setTranslateX(745);
+        flipBook.setTranslateY(740);
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
         flipBook.setManaged(false);
@@ -378,22 +376,28 @@ public class Ship extends Sprite {
      * @param thrust Thrust ship forward or not. True move forward otherwise
      * false.
      */
-    public void plotCourse(Map<KeyCode, Boolean> vkeys, boolean thrust) {
+    public void plotCourse(Map<KeyCode, Boolean> keysMap, boolean thrust) {
 
         if (u == null) {
             u = new CustomVector(1, 0);
         }
-        CustomVector v = new CustomVector(
-                (
-                 (vkeys.getOrDefault(KeyCode.A, false) ? -1 : 0)
-                + (vkeys.getOrDefault(KeyCode.D, false) ? 1 : 0)),
-                ((vkeys.getOrDefault(KeyCode.S, false) ? -1:0)
-                + (vkeys.getOrDefault(KeyCode.W, false) ? 1:0))
-        );
-        if (v.x == 0 && v.y ==0) {
-            vX = 0; 
-            vY = 0; 
-            
+        int x = 0;
+        if (keysMap.getOrDefault(KeyCode.A, false)) 
+            x -= 1;
+        if (keysMap.getOrDefault(KeyCode.D, false)) 
+            x += 1;
+
+        int y = 0;
+        if (keysMap.getOrDefault(KeyCode.S, false)) 
+            y -= 1;
+        if (keysMap.getOrDefault(KeyCode.W, false)) 
+            y += 1;
+
+        CustomVector v = new CustomVector(x, y);
+        if (v.x == 0 && v.y == 0) {
+            vX = 0;
+            vY = 0;
+
         }
 
         double atan2RadiansU = Math.atan2(u.y, u.x);
@@ -593,27 +597,31 @@ public class Ship extends Sprite {
 
     public Missile fire() {
 
-        float slowDownAmt = 0;
+        float slowDownAmt;
         int scaleBeginningMissle;
-        
-        if (KeyCode.L == keyCode) {         
-            fireMissile = (new Missile(ResourcesManager.missile1)); 
+
+        if (KeyCode.L == keyCode) {
+            fireMissile = (new Missile(ResourcesManager.missile1));
+            fireMissile.setDamageHP((int) (Math.random() * 10));
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-            
+
         } else if (KeyCode.P == keyCode) {
-            fireMissile = (new Missile(ResourcesManager.missile2)); 
+            fireMissile = (new Missile(ResourcesManager.missile2));
+            fireMissile.setDamageHP((int) (Math.random() * 5));
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-            
+
         } else if (KeyCode.O == keyCode) {
-            fireMissile = (new Missile(ResourcesManager.missile3)); 
+            fireMissile = (new Missile(ResourcesManager.missile3));
+            fireMissile.setDamageHP((int) (Math.random() * 15));
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-            
+
         } else {
 
             fireMissile = new Missile(ResourcesManager.missile3);
+            fireMissile.setDamageHP((int) (Math.random() * 3));
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
         }

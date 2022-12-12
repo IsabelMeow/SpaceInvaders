@@ -9,41 +9,7 @@ import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
 import javafx.scene.effect.Glow;
-import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.util.Random;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -74,6 +40,14 @@ public class GameWorld extends GameEngine {
     Atom invader;
     Missile missile;
     int score = 0;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -282,6 +256,8 @@ public class GameWorld extends GameEngine {
             // Randomize the location of each newly generated atom.
             atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
             atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
+            atom.setHealth((int) (Math.random() * 7));
+            atom.setPoints(200);
 
             // random x between 0 to width of scene
             double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
@@ -345,7 +321,8 @@ public class GameWorld extends GameEngine {
         
         Node displayNode;
         if (sprite instanceof Ship) {
-            displayNode = sprite.getNode();//((Ship)sprite).getCurrentShipImage();
+            displayNode = sprite.getNode();
+            //((Ship)sprite).getCurrentShipImage();
         } else {
             displayNode = sprite.getNode();
         }

@@ -18,7 +18,27 @@ import javafx.util.Duration;
  * @author cdea
  */
 public class Atom extends Sprite {
+    private int health; 
+    private int points; 
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    
+    
     /**
      * Constructor will create a optionally create a gradient fill circle shape.
      * This sprite will contain a JavaFX Circle node.

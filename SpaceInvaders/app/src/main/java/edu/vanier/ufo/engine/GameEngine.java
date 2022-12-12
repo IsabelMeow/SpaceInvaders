@@ -1,5 +1,6 @@
 package edu.vanier.ufo.engine;
 
+import edu.vanier.ufo.game.Atom;
 import edu.vanier.ufo.game.Missile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -151,9 +152,24 @@ public abstract class GameEngine {
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 if (handleCollision(spriteA, spriteB)) {
-                    //Shape intersect = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
+                    Shape intersect = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     if (spriteA instanceof Missile) {
-                        //Missile missile = ((Missile) spriteA); 
+                        Missile missile = ((Missile) spriteA); 
+                        Atom atom = ((Atom) spriteB); 
+                        missile.implode(this);
+                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
+                        
+                        if (atom.getHealth() < 0) {
+                            getSpriteManager().removeSprites(atom);
+                            atom.implode(this);
+                            //points
+                            if (spriteManager.getAllSprites().isEmpty()) {
+                                victory();
+                                
+                            }
+                            
+                            
+                        }
                         
                     }
                     // The break helps optimize the collisions
