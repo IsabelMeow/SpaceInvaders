@@ -65,6 +65,10 @@ public class GameWorld extends GameEngine {
         super(fps, title);
         this.level = level;
     }
+    
+    public GameWorld(int fps, String title) {
+        super(fps, title);
+    }
 
     /**
      * Initialize the game world by adding sprite objects.
@@ -135,7 +139,7 @@ public class GameWorld extends GameEngine {
         
         HBox row3 = new HBox();
         
- // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
+        // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
         livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));

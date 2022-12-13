@@ -12,8 +12,10 @@ import javafx.stage.Stage;
  * @author cdea
  */
 public class SpaceInvadersApp extends Application {
+    
     LevelSettings gameLevels; 
     GameEngine gameWorld;
+    LevelSelector selectLevel;
 
     /**
      * @param args the command line arguments
