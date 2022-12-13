@@ -105,8 +105,7 @@ public class Atom extends Sprite {
         explosion.getNode().setLayoutX(currentNode.getTranslateX());
         explosion.getNode().setLayoutY(currentNode.getTranslateY());
         gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
-        
-        
+          
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
         ft.setFromValue(vX);
         ft.setToValue(0);
