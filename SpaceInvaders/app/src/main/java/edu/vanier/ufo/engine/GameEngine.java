@@ -171,15 +171,14 @@ public abstract class GameEngine {
                     
                     //missile that explodes with an invader
                     if ((spriteA instanceof Missile && spriteB instanceof Atom)) {
+                        
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
                         missile.implode(this);                        
                         
                         
                         //if the invader is dead, clear the invader, update score
-                      
-                            
-                            
+  
                             getSpriteManager().removeAtom(atom);
                             atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
@@ -190,9 +189,7 @@ public abstract class GameEngine {
                                 victory();
                                 
                             }
-                            
-                            
-                        
+
                         //remove the missile from there since it collided with an invader 
                         getSpriteManager().addSpritesToBeRemoved(missile);
                        
@@ -224,8 +221,7 @@ public abstract class GameEngine {
                                 }
                             }
                         }
-                    }
-                  
+                    }                  
                 }
             }
         }
