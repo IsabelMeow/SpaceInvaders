@@ -351,11 +351,11 @@ public class GameWorld extends GameEngine {
                 getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
                 // play  explosion sound
                 getSoundManager().playSound("explosion");
-               if (spriteA != spaceShip) {                  
+               if (!(spriteA instanceof Ship)) {                  
                     spriteA.handleDeath(this); 
                     
                 }
-                if (spriteB != spaceShip) {
+                if (!(spriteB instanceof Ship)) {
                     spriteB.handleDeath(this);
                     
                 }   
