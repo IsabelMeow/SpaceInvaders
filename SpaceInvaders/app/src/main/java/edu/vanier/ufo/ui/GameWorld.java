@@ -38,7 +38,6 @@ public class GameWorld extends GameEngine {
     public Label levelNumber; 
     Ship spaceShip = new Ship(); 
     Atom invader;
-    int nbOfSprites;
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -231,6 +230,7 @@ public class GameWorld extends GameEngine {
             double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
 
             // TODO: configure the size of the generated images.
+            
             // check for the right of the width newX is greater than width 
             // minus radius times 2(width of sprite)
             if (newX > (gameSurface.getWidth() - (rnd.nextInt(15) + 5 * 2))) {
@@ -254,8 +254,6 @@ public class GameWorld extends GameEngine {
 
             // add to actors in play (sprite objects)
             getSpriteManager().addSprites(atom);  
-            nbOfSprites = getSpriteManager().getAllSprites().size();
-            System.out.println(nbOfSprites);
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
         }

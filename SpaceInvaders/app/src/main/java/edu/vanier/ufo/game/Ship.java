@@ -30,7 +30,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Ship extends Sprite {
 
     private IntegerProperty lifeCount = new SimpleIntegerProperty(3);
-
+    
     public IntegerProperty getlifeCount() {
         return lifeCount;
     }
