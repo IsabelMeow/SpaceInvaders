@@ -30,17 +30,10 @@ import javafx.util.Duration;
  * @author cdea
  */
 public abstract class GameEngine {
-    private IntegerProperty score = new SimpleIntegerProperty(0);
+    
     Ship spaceShip = new Ship();
 
-    public IntegerProperty getScore() {
-        return score;
-    }
-
-    public void setScore(IntegerProperty score) {
-        this.score = score;
-    }
-
+   
 
     /**
      * The JavaFX Scene as the game surface
@@ -167,65 +160,12 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
-                    //missile that explodes with an invader
-                    if (spriteA instanceof Missile && spriteB instanceof Atom) {
-                        Missile missile = ((Missile) spriteA); 
-                        Atom atom = ((Atom) spriteB); 
-                        missile.implode(this);
-                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
-                        //if the invader is dead, clear the invader, update score
-                        if (atom.getHealth() < 0) {
-                            getSpriteManager().removeAtom(atom);
-                            atom.implode(this);
-                            getSpriteManager().addSpritesToBeRemoved(atom);
-                            score.set(score.get() + atom.getPoints());
-                            //points
-                            //if we managed to kill all invaders, victory message
-                            if (spriteManager.getAtoms().isEmpty()) {
-                                victory();
-                                
-                            }
-                            
-                            
-                        }
-                        //remove the missile from there since it collided with an invader 
-                        getSpriteManager().addSpritesToBeRemoved(missile);
-                       
-                        
-                        //where the invader touches the spaceship
-                        if (spriteA instanceof Ship) {
-                            if (spriteB instanceof Atom) {
-                                Ship spaceShip = ((Ship) spriteA); 
-                                //shielding
-                                if (!spaceShip.isShieldOn()) {
-                                    spaceShip.damaged();
-                                    
-                                }
-                                else {
-                                    spaceShip.setShieldOn(false); //removing shield since boom
-                                    spaceShip.collidingNode.setOpacity(0);
-                                }
-                                
-                                ((Atom) spriteB).implode(this);
-                                getSpriteManager().addSpritesToBeRemoved(spriteB);
-                                getSpriteManager().removeAtom((Atom) spriteB);
-                                if (spriteManager.getAtoms().isEmpty()) {
-                                    victory();
-                                }
-                                if (spaceShip.getlifeCount().get() == 0) {
-                                    spaceShip.isDead = true; 
-                                    lost(); 
-                                    
-                                }
-                            }
-                        }
-                    }
-                  
-                }
-            }
+                
+        
+    }
+    }
         }
     }
-
     /**
      * When two objects collide this method can handle the passed in sprite
      * objects. By default it returns false, meaning the objects do not collide.
@@ -236,8 +176,7 @@ public abstract class GameEngine {
      */
     
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        Shape shape = Shape.intersect((Shape)spriteA.collidingNode, (Shape)spriteB.collidingNode);
-        return shape.getBoundsInLocal().getWidth() > -1;
+       return false; 
     }
 
     /**

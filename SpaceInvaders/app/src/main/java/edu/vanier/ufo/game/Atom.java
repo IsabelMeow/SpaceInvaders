@@ -4,6 +4,8 @@ import edu.vanier.ufo.engine.GameEngine;
 import edu.vanier.ufo.engine.SoundManager;
 import edu.vanier.ufo.engine.Sprite;
 import edu.vanier.ufo.helpers.ResourcesManager;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -23,7 +25,21 @@ public class Atom extends Sprite {
     private int health; 
     private int points; 
     private double centerX; 
-    private double centerY; 
+    private double centerY;
+    private List<Atom> atoms; 
+
+    
+    private void addAtoms (Atom atom){
+       atoms.add(atom); 
+    }
+    
+    public List<Atom> getAtoms() {
+        return atoms;
+    }
+
+    public void setAtoms(List<Atom> atoms) {
+        this.atoms = atoms;
+    }
 
     public double getCenterX() {
         return centerX;
@@ -71,6 +87,7 @@ public class Atom extends Sprite {
         newAtom.setImage(shipImage);        
         this.node = newAtom;
         this.collidingNode = newAtom;
+        
     }
 
     /**
@@ -101,9 +118,10 @@ public class Atom extends Sprite {
         Node currentNode = getNode();
         /* TODO: fix this code to add explosing effect*/
         Sprite explosion = new Atom(ResourcesManager.explosion);  
-        explosion.getNode().setTranslateX(currentNode.getTranslateX() + vX);
-        explosion.getNode().setTranslateX(currentNode.getTranslateX() + vY);
+        explosion.getNode().setLayoutX(currentNode.getTranslateX());
+        explosion.getNode().setLayoutY(currentNode.getTranslateX());
         gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
+          
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
         ft.setFromValue(vX);
         ft.setToValue(0);
@@ -113,17 +131,18 @@ public class Atom extends Sprite {
         });
         ft.play();
     }
+
      public void implode(final GameEngine gameWorld, double centerX, double centerY) {
         vX = vY = 0;
         Node currentNode = getNode();
         /* TODO: fix this code to add explosing effect*/
         
-       Image explosionImage = new Image(ResourcesManager.explosion, 200d, 200d, true, true);
+        Image explosionImage = new Image(ResourcesManager.explosion, 200d, 200d, true, true);
         ImageView explosionAnimation = new ImageView(explosionImage);
         Group groupOfExplosion = new Group(explosionAnimation);
         
         
-        gameWorld.getSceneNodes().getChildren().remove(currentNode);
+        gameWorld.getSceneNodes().getChildren().remove(groupOfExplosion);
         gameWorld.getSceneNodes().getChildren().add(groupOfExplosion);
         groupOfExplosion.setLayoutX(centerX- explosionImage.getWidth() / 2);
         groupOfExplosion.setLayoutY(centerY - explosionImage.getHeight() / 2);
@@ -142,12 +161,15 @@ public class Atom extends Sprite {
         });
         ft.play();
     }
-    
-   
+
+     
+
 
     @Override
     public void handleDeath(GameEngine gameWorld) {
         implode(gameWorld);
         super.handleDeath(gameWorld);
     }
+
+   
 }

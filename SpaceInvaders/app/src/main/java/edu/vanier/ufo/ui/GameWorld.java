@@ -3,6 +3,7 @@ package edu.vanier.ufo.ui;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.*;
 import edu.vanier.ufo.game.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
@@ -44,6 +45,8 @@ public class GameWorld extends GameEngine {
     private boolean victory; 
     Label currentScore = new Label();
     Label livesCounter = new Label();
+    private LevelSettings level; 
+    public ArrayList<Atom> atomsList = new ArrayList<Atom>(); 
 
     public int getScore() {
         return score;
@@ -62,8 +65,9 @@ public class GameWorld extends GameEngine {
         this.victory = victory;
     }
     
-    public GameWorld(int fps, String title) {
+    public GameWorld(int fps, String title, LevelSettings level) {
         super(fps, title);
+        this.level = level;
     }
 
     /**
@@ -71,6 +75,7 @@ public class GameWorld extends GameEngine {
      *
      * @param primaryStage The game window or primary stage.
      */
+    
     @Override
     public void initialize(final Stage primaryStage) {
         this.gameLevel = new LevelSettings(1, 12); 
@@ -84,12 +89,14 @@ public class GameWorld extends GameEngine {
         setGameSurface(new Scene(getSceneNodes(), 1000, 600));
 
         // Change the background of the main scene.
-        getGameSurface().setFill(Color.BLACK);
+        
 
         primaryStage.setScene(getGameSurface());
 
+        getGameSurface().setFill(Color.BLACK);
         // Setup Game input
         setupInput(primaryStage);
+        
         
         getSpriteManager().addSprites(this.gameLevel.getShip());
         getSceneNodes().getChildren().add(0, this.gameLevel.getShip().getNode());
@@ -151,6 +158,14 @@ public class GameWorld extends GameEngine {
         
         // load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
+    }
+    public boolean gameOverCase(){
+        if (this.gameLevel.getShip().isDead == true) {
+            return false;
+        } else if (this.atomsList.isEmpty()) {
+            return true; 
+        }
+        return false; 
     }
 
     /**
@@ -246,8 +261,7 @@ public class GameWorld extends GameEngine {
             // random 0 to 2 + (.0 to 1) * random (1 or -1)
             // Randomize the location of each newly generated atom.
             atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setHealth(500);
+            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));       
             atom.setPoints(200);
 
             // random x between 0 to width of scene
@@ -284,6 +298,7 @@ public class GameWorld extends GameEngine {
 
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
+            this.atomsList.add(atom); 
         }
     }
 
@@ -294,6 +309,7 @@ public class GameWorld extends GameEngine {
      */
     @Override
     protected void handleUpdate(Sprite sprite) {
+        this.gameOverCase(); 
         // advance object
         sprite.update();
         if (sprite instanceof Missile) {
@@ -364,7 +380,8 @@ public class GameWorld extends GameEngine {
         this.currentScore.setText("Current Score: " + this.getScore());
     }
 
-protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
+    @Override
+    protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
 <<<<<<< HEAD
          
@@ -405,6 +422,7 @@ protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
                             getSpriteManager().removeAtom(atom);
                             atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
+                            this.atomsList.remove(atom); 
                             this.updateScore();
                            
                             //points
