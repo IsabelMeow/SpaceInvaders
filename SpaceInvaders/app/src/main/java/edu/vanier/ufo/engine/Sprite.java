@@ -45,7 +45,14 @@ public abstract class Sprite {
         vX += x;
         vY += y;
     }
-
+    public double getCenterX(){
+        return getNode().getLayoutX() + ((getNode().getBoundsInLocal().getWidth() /2)); 
+    }
+    
+    
+    public double getCenterY(){
+        return getNode().getLayoutY() + ((getNode().getBoundsInLocal().getHeight() /2)); 
+    }
     /**
      * Did this sprite collide into the other sprite?
      *
@@ -53,8 +60,13 @@ public abstract class Sprite {
      * @return boolean - Whether this or the other sprite collided, otherwise
      * false.
      */
-    public boolean collide(Sprite other) {
-        return collidingNode.getBoundsInParent().intersects(other.node.getBoundsInParent());
+    public boolean collide(Sprite spriteA) {
+        Bounds bounds = spriteA.getNode().localToScene(spriteA.getNode().getBoundsInLocal()); 
+        return node.intersects(bounds); 
+        
+        
+        
+//        return collidingNode.getBoundsInParent().intersects(other.node.getBoundsInParent());
         /*if (collidingNode == null || other.collidingNode == null) {
             return false;
         }

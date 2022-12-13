@@ -166,18 +166,21 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 if (handleCollision(spriteA, spriteB)) {
                     Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
+                    //missile that explodes with an invader
                     if (spriteA instanceof Missile) {
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
                         missile.implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
                         atom.setHealth(atom.getHealth() - missile.getDamageHP());
                         
+                        //if the invader is dead, clear the invader, update score
                         if (atom.getHealth() < 0) {
                             getSpriteManager().removeAtom(atom);
                             atom.implode(this, atom.getCenterX(), atom.getCenterY());
                             getSpriteManager().addSpritesToBeRemoved(atom);
                             score.set(score.get() + atom.getPoints());
                             //points
+                            //if we managed to kill all invaders, victory message
                             if (spriteManager.getAtoms().isEmpty()) {
                                 victory();
                                 
@@ -185,11 +188,14 @@ public abstract class GameEngine {
                             
                             
                         }
-                        
+                        //remove the missile from there since it collided with an invader 
                         getSpriteManager().addSpritesToBeRemoved(missile);
+                        
+                        //where the invader touches the spaceship
                         if (spriteA instanceof Ship) {
                             if (spriteB instanceof Atom) {
                                 Ship spaceShip = ((Ship) spriteA); 
+                                //shielding
                                 if (!spaceShip.isShieldOn()) {
                                     spaceShip.damaged();
                                     
@@ -340,5 +346,6 @@ public abstract class GameEngine {
         // Stop the game's animation.
         getGameLoop().stop();
         getSoundManager().shutdown();
+        getSpriteManager().clear();
     }
 }
