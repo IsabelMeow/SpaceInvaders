@@ -31,6 +31,7 @@ import javafx.util.Duration;
  */
 public abstract class GameEngine {
     private IntegerProperty score = new SimpleIntegerProperty(0);
+    Ship spaceShip = new Ship();
 
     public IntegerProperty getScore() {
         return score;
@@ -164,20 +165,22 @@ public abstract class GameEngine {
         // check each sprite against other sprite objects.
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
+                
                 if (handleCollision(spriteA, spriteB)) {
-                    Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
-                    if (spriteA instanceof Missile) {
+                    //missile that explodes with an invader
+                    if (spriteA instanceof Missile && spriteB instanceof Atom) {
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
-                        missile.implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
+                        missile.implode(this);
                         atom.setHealth(atom.getHealth() - missile.getDamageHP());
-                        
+                        //if the invader is dead, clear the invader, update score
                         if (atom.getHealth() < 0) {
                             getSpriteManager().removeAtom(atom);
-                            atom.implode(this, atom.getCenterX(), atom.getCenterY());
+                            atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
                             score.set(score.get() + atom.getPoints());
                             //points
+                            //if we managed to kill all invaders, victory message
                             if (spriteManager.getAtoms().isEmpty()) {
                                 victory();
                                 
@@ -185,11 +188,15 @@ public abstract class GameEngine {
                             
                             
                         }
-                        
+                        //remove the missile from there since it collided with an invader 
                         getSpriteManager().addSpritesToBeRemoved(missile);
+                       
+                        
+                        //where the invader touches the spaceship
                         if (spriteA instanceof Ship) {
                             if (spriteB instanceof Atom) {
                                 Ship spaceShip = ((Ship) spriteA); 
+                                //shielding
                                 if (!spaceShip.isShieldOn()) {
                                     spaceShip.damaged();
                                     
@@ -199,7 +206,7 @@ public abstract class GameEngine {
                                     spaceShip.collidingNode.setOpacity(0);
                                 }
                                 
-                                ((Atom) spriteB).implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
+                                ((Atom) spriteB).implode(this);
                                 getSpriteManager().addSpritesToBeRemoved(spriteB);
                                 getSpriteManager().removeAtom((Atom) spriteB);
                                 if (spriteManager.getAtoms().isEmpty()) {
@@ -227,8 +234,10 @@ public abstract class GameEngine {
      * @param spriteB - called from checkCollision() method to be compared.
      * @return boolean True if the objects collided, otherwise false.
      */
+    
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        return false;
+        Shape shape = Shape.intersect((Shape)spriteA.collidingNode, (Shape)spriteB.collidingNode);
+        return shape.getBoundsInLocal().getWidth() > -1;
     }
 
     /**
@@ -340,5 +349,6 @@ public abstract class GameEngine {
         // Stop the game's animation.
         getGameLoop().stop();
         getSoundManager().shutdown();
+        getSpriteManager().clear();
     }
 }

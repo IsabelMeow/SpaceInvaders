@@ -39,6 +39,28 @@ public class GameWorld extends GameEngine {
     Ship spaceShip = new Ship(); 
     Atom invader;
     int nbOfSprites;
+
+    private int score;
+    private boolean victory; 
+    Label currentScore = new Label();
+    Label livesCounter = new Label();
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    
+    public boolean isVictory() {
+        return victory;
+    }
+
+    public void setVictory(boolean victory) {
+        this.victory = victory;
+    }
     
     public GameWorld(int fps, String title) {
         super(fps, title);
@@ -100,11 +122,11 @@ public class GameWorld extends GameEngine {
         row1.getChildren().add(levelNumber);
         
         HBox row2 = new HBox();
-        Label currentScore = new Label();
+        
         currentScore.setTextFill(Color.WHITE); 
         
         //currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
-        currentScore.setText("Current Score: " + getScore().get());
+        currentScore.setText("Current Score: " + this.getScore());
         currentScore.setFont(new Font("Monospaced Bold", 13.5));       
         Glow glow2 = new Glow();
         currentScore.setEffect(glow2);
@@ -112,7 +134,8 @@ public class GameWorld extends GameEngine {
         row2.getChildren().add(currentScore);
         
         HBox row3 = new HBox();
-        Label livesCounter = new Label();
+        
+ // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
         livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));
@@ -231,6 +254,7 @@ public class GameWorld extends GameEngine {
             double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
 
             // TODO: configure the size of the generated images.
+            
             // check for the right of the width newX is greater than width 
             // minus radius times 2(width of sprite)
             if (newX > (gameSurface.getWidth() - (rnd.nextInt(15) + 5 * 2))) {
@@ -254,8 +278,10 @@ public class GameWorld extends GameEngine {
 
             // add to actors in play (sprite objects)
             getSpriteManager().addSprites(atom);  
+
             nbOfSprites = getSpriteManager().getAllSprites().size();
             System.out.println(nbOfSprites);
+
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
         }
@@ -305,8 +331,8 @@ public class GameWorld extends GameEngine {
             sprite.setVelocityY(sprite.getVelocityY() * -1);
         }
         }
-        // Get the group node's X and Y but use the ImageView to obtain the width.
-
+ 
+        
     }
 
     /**
@@ -332,21 +358,15 @@ public class GameWorld extends GameEngine {
             getSceneNodes().getChildren().remove(missile.getNode());
         }
     }
+    
+    public void updateScore(){
+        this.score += 20; 
+        this.currentScore.setText("Current Score: " + this.getScore());
+    }
 
-    /**
-     * How to handle the collision of two sprite objects. Stops the particle by
-     * zeroing out the velocity if a collision occurred. /** How to handle the
-     * collision of two sprite objects. Stops the particle by
-     *
-     *
-     * @param spriteA Sprite from the first list.
-     * @param spriteB Sprite from the second list.
-     * @return boolean returns a true if the two sprites have collided otherwise
-     * false.
-     */
-    @Override
-    protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
+protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
+<<<<<<< HEAD
          
         if(spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())){
             if(spriteA.collide(spriteB)){
@@ -372,8 +392,80 @@ public class GameWorld extends GameEngine {
             if(spriteB != spaceShip){
                 spriteB.handleDeath(this);
                 
+=======
+         if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
+            if (spriteA.collide(spriteB)) {
+                        if (spriteA instanceof Missile && spriteB instanceof Atom) {
+                        Missile missile = ((Missile) spriteA); 
+                        Atom atom = ((Atom) spriteB); 
+                        missile.implode(this);
+                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
+                        //if the invader is dead, clear the invader, update score
+                        if (atom.getHealth() < 0) {
+                            getSpriteManager().removeAtom(atom);
+                            atom.implode(this);
+                            getSpriteManager().addSpritesToBeRemoved(atom);
+                            this.updateScore();
+                           
+                            //points
+                            //if we managed to kill all invaders, victory message
+                            if (getSpriteManager().getAtoms().isEmpty()) {
+                                victory();
+                                
+                            }
+                            
+                            
+                     
+                        //remove the missile from there since it collided with an invader 
+                        getSpriteManager().addSpritesToBeRemoved(missile);
+                       
+                        
+                        //where the invader touches the spaceship
+                        if (spriteA instanceof Ship) {
+                            if (spriteB instanceof Atom) {
+                                Ship spaceShip = ((Ship) spriteA); 
+                                //shielding
+                                if (!spaceShip.isShieldOn()) {
+                                    spaceShip.damaged();
+                                    
+                                }
+                                
+                                
+                                ((Atom) spriteB).implode(this);
+                                getSpriteManager().addSpritesToBeRemoved(spriteB);
+                                getSpriteManager().removeAtom((Atom) spriteB);
+                                if (getSpriteManager().getAtoms().isEmpty()) {
+                                    victory();
+                                }
+                                if (spaceShip.getlifeCount().get() == 0) {
+                                    spaceShip.isDead = true; 
+                                    lost(); 
+                                    
+                                }
+                            }
+                        }
+                    }
+                //load sound
+                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
+                // play  explosion sound
+                getSoundManager().playSound("explosion");
+               if (!(spriteA instanceof Ship)) {                  
+                    spriteA.handleDeath(this); 
+                    
+                }
+                if (!(spriteB instanceof Ship)) {
+                    spriteB.handleDeath(this);
+                    
+                }   
+               return true;
+>>>>>>> a33505d2bc5c3d89d945909bebe6d344a8c44686
             }
+            
         }
         return false;
     }
+        return false;
+  
+      
+}
 }

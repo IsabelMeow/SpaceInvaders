@@ -101,6 +101,8 @@ public class Atom extends Sprite {
         Node currentNode = getNode();
         /* TODO: fix this code to add explosing effect*/
         Sprite explosion = new Atom(ResourcesManager.explosion);  
+        explosion.getNode().setTranslateX(currentNode.getTranslateX() + vX);
+        explosion.getNode().setTranslateX(currentNode.getTranslateX() + vY);
         gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
         ft.setFromValue(vX);
@@ -115,7 +117,8 @@ public class Atom extends Sprite {
         vX = vY = 0;
         Node currentNode = getNode();
         /* TODO: fix this code to add explosing effect*/
-       Image explosionImage = new Image(ResourcesManager.explosion, 100d, 100d, true, true);
+        
+       Image explosionImage = new Image(ResourcesManager.explosion, 200d, 200d, true, true);
         ImageView explosionAnimation = new ImageView(explosionImage);
         Group groupOfExplosion = new Group(explosionAnimation);
         
@@ -124,6 +127,11 @@ public class Atom extends Sprite {
         gameWorld.getSceneNodes().getChildren().add(groupOfExplosion);
         groupOfExplosion.setLayoutX(centerX- explosionImage.getWidth() / 2);
         groupOfExplosion.setLayoutY(centerY - explosionImage.getHeight() / 2);
+         System.out.println(centerX);
+         System.out.println(centerY);
+         System.out.println("Explosion");
+         System.out.println(centerX- explosionImage.getWidth() / 2);
+         System.out.println(centerY - explosionImage.getHeight() / 2);
         
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
         ft.setFromValue(vX);
