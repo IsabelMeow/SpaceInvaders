@@ -357,7 +357,7 @@ protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
                     spriteB.handleDeath(this);
                     
                 }   
-               
+               return true;
             }
             
         }
