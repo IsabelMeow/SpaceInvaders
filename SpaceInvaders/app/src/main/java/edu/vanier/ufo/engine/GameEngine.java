@@ -152,6 +152,7 @@ public abstract class GameEngine {
      */
     
     protected void victory(){
+        System.out.println("");
         
     }
     
@@ -167,14 +168,18 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
+                    
                     //missile that explodes with an invader
-                    if (spriteA instanceof Missile && spriteB instanceof Atom) {
+                    if ((spriteA instanceof Missile && spriteB instanceof Atom)) {
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
-                        missile.implode(this);
-                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
+                        missile.implode(this);                        
+                        
+                        
                         //if the invader is dead, clear the invader, update score
                         if (atom.getHealth() < 0) {
+                            
+                            
                             getSpriteManager().removeAtom(atom);
                             atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
