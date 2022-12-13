@@ -33,8 +33,6 @@ public abstract class GameEngine {
     
     Ship spaceShip = new Ship();
 
-   
-
     /**
      * The JavaFX Scene as the game surface
      */
@@ -160,12 +158,7 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
-
-                   
-
-
-                
-        
+ 
     }
     }
 

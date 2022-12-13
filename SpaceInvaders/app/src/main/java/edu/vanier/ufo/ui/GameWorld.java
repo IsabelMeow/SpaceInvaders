@@ -386,12 +386,13 @@ public class GameWorld extends GameEngine {
                         if (spriteA instanceof Missile && spriteB instanceof Atom) {
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
-                        missile.implode(this);
+                        
+                        //missile.implode(this);
                         atom.setHealth(atom.getHealth() - missile.getDamageHP());
                         //if the invader is dead, clear the invader, update score
                         if (atom.getHealth() < 0) {
                             getSpriteManager().removeAtom(atom);
-                            atom.implode(this);
+                            //atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
                             this.atomsList.remove(atom); 
                             this.updateScore();
@@ -420,7 +421,7 @@ public class GameWorld extends GameEngine {
                                 }
                                 
                                 
-                                ((Atom) spriteB).implode(this);
+                                //((Atom) spriteB).implode(this);
                                 getSpriteManager().addSpritesToBeRemoved(spriteB);
                                 getSpriteManager().removeAtom((Atom) spriteB);
                                 if (getSpriteManager().getAtoms().isEmpty()) {
@@ -438,8 +439,9 @@ public class GameWorld extends GameEngine {
                 getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
                 // play  explosion sound
                 getSoundManager().playSound("explosion");
-               if (!(spriteA instanceof Ship)) {                  
-                    spriteA.handleDeath(this); 
+               if (!(spriteA instanceof Ship)) {                    
+                    spriteA.handleDeathWithExplosion(this); 
+                    
                     
                 }
                 if (!(spriteB instanceof Ship)) {

@@ -151,4 +151,11 @@ public abstract class Sprite {
         gameWorld.getSpriteManager().addSpritesToBeRemoved(this);
         
     }
+    
+    public void handleDeathWithExplosion(GameEngine gameWorld) {
+        gameWorld.getSpriteManager().addSpritesToBeRemoved(this);
+        
+    }
+    
+    
 }
