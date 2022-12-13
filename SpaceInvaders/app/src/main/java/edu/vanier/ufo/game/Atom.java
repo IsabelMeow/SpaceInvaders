@@ -96,14 +96,15 @@ public class Atom extends Sprite {
      *
      * @param gameWorld - game world
      */
+    
+    /*
     public void implode(final GameEngine gameWorld) {
         vX = vY = 0;
         Node currentNode = getNode();
-        /* TODO: fix this code to add explosing effect*/
+        //TODO: fix this code to add explosing effect
         Sprite explosion = new Atom(ResourcesManager.explosion);  
-              
         explosion.getNode().setLayoutX(currentNode.getTranslateX());
-        explosion.getNode().setLayoutY(currentNode.getTranslateY());
+        explosion.getNode().setLayoutY(currentNode.getTranslateX());
         gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
           
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
@@ -116,27 +117,25 @@ public class Atom extends Sprite {
         ft.play();
     }
 
-     public void implode(final GameEngine gameWorld, double centerX, double centerY) {
+*/
+    
+    
+     public void implode(final GameEngine gameWorld) {
         vX = vY = 0;
         Node currentNode = getNode();
-        /* TODO: fix this code to add explosing effect*/
+        //TODO: fix this code to add explosing effect
         
-        Image explosionImage = new Image(ResourcesManager.explosion, 200d, 200d, true, true);
+        Image explosionImage = new Image(ResourcesManager.explosion, 100d, 100d, true, true);
         ImageView explosionAnimation = new ImageView(explosionImage);
         Group groupOfExplosion = new Group(explosionAnimation);
         
         
         gameWorld.getSceneNodes().getChildren().remove(groupOfExplosion);
         gameWorld.getSceneNodes().getChildren().add(groupOfExplosion);
-        groupOfExplosion.setLayoutX(centerX- explosionImage.getWidth() / 2);
-        groupOfExplosion.setLayoutY(centerY - explosionImage.getHeight() / 2);
-         System.out.println(centerX);
-         System.out.println(centerY);
-         System.out.println("Explosion");
-         System.out.println(centerX- explosionImage.getWidth() / 2);
-         System.out.println(centerY - explosionImage.getHeight() / 2);
+        groupOfExplosion.setLayoutX(currentNode.getTranslateX());
+        groupOfExplosion.setLayoutY(currentNode.getTranslateY());
         
-        FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
+        FadeTransition ft = new FadeTransition(Duration.millis(150), currentNode);
         ft.setFromValue(vX);
         ft.setToValue(0);
         ft.setOnFinished((ActionEvent event) -> {
@@ -145,6 +144,7 @@ public class Atom extends Sprite {
         });
         ft.play();
     }
+     
 
      
 
