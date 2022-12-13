@@ -322,17 +322,6 @@ public class GameWorld extends GameEngine {
         }
     }
 
-    /**
-     * How to handle the collision of two sprite objects. Stops the particle by
-     * zeroing out the velocity if a collision occurred. /** How to handle the
-     * collision of two sprite objects. Stops the particle by
-     *
-     *
-     * @param spriteA Sprite from the first list.
-     * @param spriteB Sprite from the second list.
-     * @return boolean returns a true if the two sprites have collided otherwise
-     * false.
-     */
   
       
 }
