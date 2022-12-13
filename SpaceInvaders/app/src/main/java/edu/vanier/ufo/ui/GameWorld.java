@@ -381,7 +381,10 @@ public class GameWorld extends GameEngine {
         //TODO: implement collision detection here.
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
-                        if (spriteA instanceof Missile && spriteB instanceof Atom) {
+                
+                
+                        if ((spriteA instanceof Missile && spriteB instanceof Atom) || (spriteA == spaceShip && spriteB instanceof Atom) ||(spriteA instanceof Atom && spriteB == spaceShip)) {
+
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
                         

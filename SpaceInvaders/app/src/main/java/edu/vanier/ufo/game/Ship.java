@@ -26,7 +26,7 @@ import javafx.scene.effect.Glow;
  */
 public class Ship extends Sprite {
 
-    private int lifeCount;
+    private int lifeCount = 3;
 
     public int getLifeCount() {
         return lifeCount;

@@ -147,6 +147,7 @@ public abstract class GameEngine {
     }
     
     protected void lost(){
+        System.out.println("Game over");
         
     }
     protected void checkCollisions() {
@@ -158,12 +159,17 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
+                    this.spaceShip.setLifeCount(spaceShip.getLifeCount()-1);
  
+                    if(this.spaceShip.getLifeCount() <= 0)
+                        lost();
     }
     }
 
         }
     }
+    
+
     /**
      * When two objects collide this method can handle the passed in sprite
      * objects. By default it returns false, meaning the objects do not collide.
