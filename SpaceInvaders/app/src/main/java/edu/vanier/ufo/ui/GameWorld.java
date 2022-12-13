@@ -303,8 +303,8 @@ public class GameWorld extends GameEngine {
             sprite.setVelocityY(sprite.getVelocityY() * -1);
         }
         }
-        // Get the group node's X and Y but use the ImageView to obtain the width.
-
+ 
+        
     }
 
     /**
@@ -357,8 +357,11 @@ public class GameWorld extends GameEngine {
                 }
                 if (spriteB != spaceShip) {
                     spriteB.handleDeath(this);
-                }               
+                    
+                }   
+               
             }
+            
         }
         return false;
     }

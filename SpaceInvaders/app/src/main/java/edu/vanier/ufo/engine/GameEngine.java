@@ -164,7 +164,9 @@ public abstract class GameEngine {
         // check each sprite against other sprite objects.
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
+                
                 if (handleCollision(spriteA, spriteB)) {
+                    
                     Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     //missile that explodes with an invader
                     if (spriteA instanceof Missile) {
@@ -172,7 +174,6 @@ public abstract class GameEngine {
                         Atom atom = ((Atom) spriteB); 
                         missile.implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
                         atom.setHealth(atom.getHealth() - missile.getDamageHP());
-                        
                         //if the invader is dead, clear the invader, update score
                         if (atom.getHealth() < 0) {
                             getSpriteManager().removeAtom(atom);
