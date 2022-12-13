@@ -3,7 +3,6 @@ package edu.vanier.ufo.engine;
 import edu.vanier.ufo.game.Atom;
 import edu.vanier.ufo.game.Missile;
 import edu.vanier.ufo.game.Ship;
-import edu.vanier.ufo.helpers.ResourcesManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -167,7 +166,6 @@ public abstract class GameEngine {
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
-                
                 if (handleCollision(spriteA, spriteB)) {
                     
                     Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
@@ -237,39 +235,7 @@ public abstract class GameEngine {
      * @param spriteB - called from checkCollision() method to be compared.
      * @return boolean True if the objects collided, otherwise false.
      */
-    
-      /**
-     * How to handle the collision of two sprite objects. Stops the particle by
-     * zeroing out the velocity if a collision occurred. /** How to handle the
-     * collision of two sprite objects. Stops the particle by
-     *
-     *
-     * @param spriteA Sprite from the first list.
-     * @param spriteB Sprite from the second list.
-     * @return boolean returns a true if the two sprites have collided otherwise
-     * false.
-     */
-   protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        //TODO: implement collision detection here.
-        if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
-            if (spriteA.collide(spriteB)) {
-                
-                //load sound
-                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));
-                // play  explosion sound
-                getSoundManager().playSound("explosion");
-               
-                
-                if (spriteA != spaceShip) {
-                    spriteA.handleDeath(this);
-                }
-                if (spriteB != spaceShip) {
-                    spriteB.handleDeath(this);
-                }
-
-            }
-
-        }
+    protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         return false;
     }
 
