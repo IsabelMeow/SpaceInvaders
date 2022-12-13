@@ -3,6 +3,7 @@ package edu.vanier.ufo.ui;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.*;
 import edu.vanier.ufo.game.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
@@ -43,6 +44,7 @@ public class GameWorld extends GameEngine {
     Label currentScore = new Label();
     Label livesCounter = new Label();
     private LevelSettings level; 
+    public ArrayList<Atom> atomsList = new ArrayList<Atom>(); 
 
     public int getScore() {
         return score;
@@ -75,6 +77,7 @@ public class GameWorld extends GameEngine {
      *
      * @param primaryStage The game window or primary stage.
      */
+    
     @Override
     public void initialize(final Stage primaryStage) {
         this.gameLevel = new LevelSettings(1, 12); 
@@ -157,6 +160,14 @@ public class GameWorld extends GameEngine {
         
         // load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
+    }
+    public boolean gameOverCase(){
+        if (this.gameLevel.getShip().isDead == true) {
+            return false;
+        } else if (this.atomsList.isEmpty()) {
+            return true; 
+        }
+        return false; 
     }
 
     /**
@@ -285,6 +296,7 @@ public class GameWorld extends GameEngine {
             getSpriteManager().addSprites(atom);  
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
+            this.atomsList.add(atom); 
         }
     }
 
@@ -295,6 +307,7 @@ public class GameWorld extends GameEngine {
      */
     @Override
     protected void handleUpdate(Sprite sprite) {
+        this.gameOverCase(); 
         // advance object
         sprite.update();
         if (sprite instanceof Missile) {
@@ -380,6 +393,7 @@ public class GameWorld extends GameEngine {
                             getSpriteManager().removeAtom(atom);
                             atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
+                            this.atomsList.remove(atom); 
                             this.updateScore();
                            
                             //points
