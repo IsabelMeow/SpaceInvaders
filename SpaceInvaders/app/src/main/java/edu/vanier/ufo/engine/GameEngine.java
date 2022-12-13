@@ -167,10 +167,8 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
-                    
-                    //Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     //missile that explodes with an invader
-                    if (spriteA instanceof Missile) {
+                    if (spriteA instanceof Missile && spriteB instanceof Atom) {
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
                         missile.implode(this);
