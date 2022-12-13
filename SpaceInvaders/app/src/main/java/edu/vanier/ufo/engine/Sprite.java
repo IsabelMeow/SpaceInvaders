@@ -61,8 +61,9 @@ public abstract class Sprite {
      * false.
      */
     public boolean collide(Sprite spriteA) {
-        Bounds bounds = spriteA.getNode().localToScene(spriteA.getNode().getBoundsInLocal()); 
-        return node.intersects(bounds); 
+        //Bounds bounds = spriteA.getNode().localToScene(spriteA.getNode().getBoundsInLocal()); 
+        //return node.intersects(bounds); 
+        return collidingNode.getBoundsInParent().intersects(spriteA.node.getBoundsInParent());
         
         
         
