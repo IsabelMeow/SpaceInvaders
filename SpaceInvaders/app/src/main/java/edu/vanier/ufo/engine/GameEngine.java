@@ -177,7 +177,7 @@ public abstract class GameEngine {
                         
                         
                         //if the invader is dead, clear the invader, update score
-                        if (atom.getHealth() < 0) {
+                      
                             
                             
                             getSpriteManager().removeAtom(atom);
@@ -192,7 +192,7 @@ public abstract class GameEngine {
                             }
                             
                             
-                        }
+                        
                         //remove the missile from there since it collided with an invader 
                         getSpriteManager().addSpritesToBeRemoved(missile);
                        
