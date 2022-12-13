@@ -9,7 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;;
+import javafx.scene.Scene;
+;
 import javafx.scene.effect.Glow;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
@@ -33,20 +34,22 @@ import javafx.scene.image.ImageView;
  *
  * @author cdea
  */
+
+
 public class GameWorld extends GameEngine {
 
     LevelSettings gameLevel;
-    public Label levelNumber; 
-    Ship spaceShip = new Ship(); 
+    public Label levelNumber;
+    Ship spaceShip = new Ship();
     Atom invader;
     int nbOfSprites;
 
     private int score;
-    private boolean victory; 
+    private boolean victory;
     Label currentScore = new Label();
     Label livesCounter = new Label();
-    private LevelSettings level; 
-    public ArrayList<Atom> atomsList = new ArrayList<Atom>(); 
+    private LevelSettings level;
+    public ArrayList<Atom> atomsList = new ArrayList<Atom>();
 
     public int getScore() {
         return score;
@@ -56,7 +59,6 @@ public class GameWorld extends GameEngine {
         this.score = score;
     }
 
-    
     public boolean isVictory() {
         return victory;
     }
@@ -64,7 +66,7 @@ public class GameWorld extends GameEngine {
     public void setVictory(boolean victory) {
         this.victory = victory;
     }
-    
+
     public GameWorld(int fps, String title, LevelSettings level) {
         super(fps, title);
         this.level = level;
@@ -75,10 +77,9 @@ public class GameWorld extends GameEngine {
      *
      * @param primaryStage The game window or primary stage.
      */
-    
     @Override
     public void initialize(final Stage primaryStage) {
-        this.gameLevel = new LevelSettings(1, 12); 
+        this.gameLevel = new LevelSettings(1, 12);
         this.levelNumber = new Label();
         // Sets the window title
         primaryStage.setTitle(getWindowTitle());
@@ -89,60 +90,56 @@ public class GameWorld extends GameEngine {
         setGameSurface(new Scene(getSceneNodes(), 1000, 600));
 
         // Change the background of the main scene.
-        
-
         primaryStage.setScene(getGameSurface());
 
         getGameSurface().setFill(Color.BLACK);
         // Setup Game input
         setupInput(primaryStage);
-        
-        
+
         getSpriteManager().addSprites(this.gameLevel.getShip());
         getSceneNodes().getChildren().add(0, this.gameLevel.getShip().getNode());
         // mouse point
         VBox stats = new VBox();
-        
+
         // Create many spheres depending on current level      
-        if(gameLevel.getLevelNumber() == 1){
+        if (gameLevel.getLevelNumber() == 1) {
             generateManySpheres(15);
-            
-        } else if(gameLevel.getLevelNumber() == 2){
+
+        } else if (gameLevel.getLevelNumber() == 2) {
             generateManySpheres(17);
-             
-        }else if(gameLevel.getLevelNumber() == 3){
+
+        } else if (gameLevel.getLevelNumber() == 3) {
             generateManySpheres(20);
-             
+
         }
-        
+
         //TODO: Add the HUD here.
         //HUD that displays level, lives and score
-        
         HBox row1 = new HBox();
         gameLevel.setLevelNumber(1);
-        this.levelNumber.setText("Current Level: " + gameLevel.getLevelNumber());       
+        this.levelNumber.setText("Current Level: " + gameLevel.getLevelNumber());
         this.levelNumber.setTextFill(Color.WHITE);
         this.levelNumber.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow1 = new Glow();
         this.levelNumber.setEffect(glow1);
-        glow1.setLevel(15);      
+        glow1.setLevel(15);
         row1.getChildren().add(levelNumber);
-        
+
         HBox row2 = new HBox();
-        
-        currentScore.setTextFill(Color.WHITE); 
-        
+
+        currentScore.setTextFill(Color.WHITE);
+
         //currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
         currentScore.setText("Current Score: " + this.getScore());
-        currentScore.setFont(new Font("Monospaced Bold", 13.5));       
+        currentScore.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow2 = new Glow();
         currentScore.setEffect(glow2);
         glow2.setLevel(15);
         row2.getChildren().add(currentScore);
-        
+
         HBox row3 = new HBox();
-        
- // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
+
+        // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
         livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));
@@ -150,22 +147,25 @@ public class GameWorld extends GameEngine {
         livesCounter.setEffect(glow3);
         glow3.setLevel(15);
         row3.getChildren().add(livesCounter);
-        
+
         stats.getChildren().add(row1);
         stats.getChildren().add(row2);
         stats.getChildren().add(row3);
         getSceneNodes().getChildren().add(stats);
-        
+
         // load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
     }
-    public boolean gameOverCase(){
+
+    public boolean gameOverCase() {
         if (this.gameLevel.getShip().isDead == true) {
-            return false;
+            this.setVictory(false);
+            return true;
         } else if (this.atomsList.isEmpty()) {
-            return true; 
+            this.setVictory(true);
+            return true;
         }
-        return false; 
+        return false;
     }
 
     /**
@@ -173,14 +173,11 @@ public class GameWorld extends GameEngine {
      *
      * @param primaryStage The primary stage (app window).
      */
-    
     private void setupInput(Stage primaryStage) {
         System.out.println("Ship's center is (" + this.gameLevel.getShip().getCenterX() + ", " + this.gameLevel.getShip().getCenterY() + ")");
-        HashMap <KeyCode, Boolean> keysHashMap = new HashMap(); 
-    
+        HashMap<KeyCode, Boolean> keysHashMap = new HashMap();
+
         //Weapons are changed successfully, shooting still weird    
-                
-                
         EventHandler fireOrMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
             //mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
             if (event.getButton() == MouseButton.PRIMARY) {
@@ -204,23 +201,19 @@ public class GameWorld extends GameEngine {
                 if (getSpriteManager().getAllSprites().size() <= 1) {
                     //TODO: change the number of sprites to be generated depending on the game level.
                     //TODO: All sprites have beend destroyed. Genereate a new set of sprites.     
-                   
-                    
+
                     System.out.println("Game over or current level is over!");
                 }
                 // stop ship from moving forward               
                 this.gameLevel.getShip().applyTheBrakes(event.getX(), event.getY());
                 // move forward and rotate ship
                 //this.gameLevel.getShip().plotCourse(event.getX(), event.getY(), true);
-            
+
             }
         };
-        
-        
 
         // Initialize input
         primaryStage.getScene().setOnMousePressed(fireOrMove);
-
 
         // set up stats
         EventHandler changeWeaponsOrMove = (EventHandler<KeyEvent>) (KeyEvent event) -> {
@@ -228,20 +221,19 @@ public class GameWorld extends GameEngine {
                 System.out.println("Shield toggle on!");
                 this.gameLevel.getShip().shieldToggle();
                 return;
-            }
-            else if(KeyCode.A == event.getCode() || KeyCode.D == event.getCode() || KeyCode.S == event.getCode() || KeyCode.W == event.getCode()){
-                keysHashMap.put(event.getCode(), true); 
+            } else if (KeyCode.A == event.getCode() || KeyCode.D == event.getCode() || KeyCode.S == event.getCode() || KeyCode.W == event.getCode()) {
+                keysHashMap.put(event.getCode(), true);
                 this.gameLevel.getShip().plotCourse(keysHashMap, true);
             }
             this.gameLevel.getShip().changeWeapon(event.getCode());
         };
         primaryStage.getScene().setOnKeyPressed(changeWeaponsOrMove);
-        primaryStage.getScene().setOnKeyReleased(event ->{
-           keysHashMap.put(event.getCode(), false); 
+        primaryStage.getScene().setOnKeyReleased(event -> {
+            keysHashMap.put(event.getCode(), false);
             this.gameLevel.getShip().plotCourse(keysHashMap, true);
         }
         );
-        
+
     }
 
     /**
@@ -256,19 +248,18 @@ public class GameWorld extends GameEngine {
         for (int i = 0; i < numSpheres; i++) {
             //Randomly selects sprites from getInvadersSprites between the # of elements in the Hashmap
             Random randomElement = new Random();
-            Atom atom = new Atom(ResourcesManager.getInvaderSprites().get(1 + randomElement.nextInt(ResourcesManager.getInvaderSprites().size())));           
+            Atom atom = new Atom(ResourcesManager.getInvaderSprites().get(1 + randomElement.nextInt(ResourcesManager.getInvaderSprites().size())));
             ImageView atomImage = atom.getImageViewNode();
             // random 0 to 2 + (.0 to 1) * random (1 or -1)
             // Randomize the location of each newly generated atom.
             atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));       
+            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
             atom.setPoints(200);
 
             // random x between 0 to width of scene
-            double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
+            double newX = rnd.nextInt((int) gameSurface.getHeight()/2);
 
             // TODO: configure the size of the generated images.
-            
             // check for the right of the width newX is greater than width 
             // minus radius times 2(width of sprite)
             if (newX > (gameSurface.getWidth() - (rnd.nextInt(15) + 5 * 2))) {
@@ -291,14 +282,13 @@ public class GameWorld extends GameEngine {
             atomImage.setManaged(false);
 
             // add to actors in play (sprite objects)
-            getSpriteManager().addSprites(atom);  
+            getSpriteManager().addSprites(atom);
 
             nbOfSprites = getSpriteManager().getAllSprites().size();
-            System.out.println(nbOfSprites);
 
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
-            this.atomsList.add(atom); 
+            this.atomsList.add(atom);
         }
     }
 
@@ -309,7 +299,7 @@ public class GameWorld extends GameEngine {
      */
     @Override
     protected void handleUpdate(Sprite sprite) {
-        this.gameOverCase(); 
+        this.gameOverCase();
         // advance object
         sprite.update();
         if (sprite instanceof Missile) {
@@ -329,26 +319,24 @@ public class GameWorld extends GameEngine {
         // bounce off the walls when outside of boundaries
 
         //FIXME: The ship movement has got issues.
-        
         Node displayNode;
         if (sprite instanceof Ship) {
             //((Ship)sprite).getCurrentShipImage();
         } else {
             displayNode = sprite.getNode();
-              if (sprite.getNode().getTranslateX() > (getGameSurface().getWidth() - displayNode.getBoundsInParent().getWidth())
-                || displayNode.getTranslateX() < 0) {
+            if (sprite.getNode().getTranslateX() > (getGameSurface().getWidth() - displayNode.getBoundsInParent().getWidth())
+                    || displayNode.getTranslateX() < 0) {
 
-            // bounce the opposite direction
-            sprite.setVelocityX(sprite.getVelocityX() * -1);
+                // bounce the opposite direction
+                sprite.setVelocityX(sprite.getVelocityX() * -1);
+            }
+            // Get the group node's X and Y but use the ImageView to obtain the height.
+            if (sprite.getNode().getTranslateY() > getGameSurface().getHeight() - displayNode.getBoundsInParent().getHeight()
+                    || sprite.getNode().getTranslateY() < 0) {
+                sprite.setVelocityY(sprite.getVelocityY() * -1);
+            }
         }
-        // Get the group node's X and Y but use the ImageView to obtain the height.
-        if (sprite.getNode().getTranslateY() > getGameSurface().getHeight() - displayNode.getBoundsInParent().getHeight()
-                || sprite.getNode().getTranslateY() < 0) {
-            sprite.setVelocityY(sprite.getVelocityY() * -1);
-        }
-        }
- 
-        
+
     }
 
     /**
@@ -374,116 +362,66 @@ public class GameWorld extends GameEngine {
             getSceneNodes().getChildren().remove(missile.getNode());
         }
     }
-    
-    public void updateScore(){
-        this.score += 20; 
+
+    public void updateScore() {
+        this.score += 20;
         this.currentScore.setText("Current Score: " + this.getScore());
     }
 
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
-<<<<<<< HEAD
-         
-        if(spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())){
-            if(spriteA.collide(spriteB)){
-                
-                //load sound
-                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
 
-              //   play  explosion sound
-                getSoundManager().playSound("explosion");
-            }
-            
-            if(spriteA != spaceShip){
-               
-                // play  explosion sound
-                getSoundManager().playSound("explosion");
-            }
-            
-            if(spriteA != spaceShip){
-                spriteA.handleDeath(this); 
-                    
-            }
-            
-            if(spriteB != spaceShip){
-                spriteB.handleDeath(this);
-                
-=======
-         if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
+        if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
-                        if (spriteA instanceof Missile && spriteB instanceof Atom) {
-                        Missile missile = ((Missile) spriteA); 
-                        Atom atom = ((Atom) spriteB); 
-                        missile.implode(this);
-                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
-                        //if the invader is dead, clear the invader, update score
-                        if (atom.getHealth() < 0) {
-                            getSpriteManager().removeAtom(atom);
-                            atom.implode(this);
-                            getSpriteManager().addSpritesToBeRemoved(atom);
-                            this.atomsList.remove(atom); 
-                            this.updateScore();
-                           
-                            //points
-                            //if we managed to kill all invaders, victory message
-                            if (getSpriteManager().getAtoms().isEmpty()) {
-                                victory();
-                                
-                            }
-                            
-                            
-                     
+                if (spriteA instanceof Missile && spriteB instanceof Atom) {
+                    Missile missile = ((Missile) spriteA);
+                    Atom atom = ((Atom) spriteB);
+                    missile.implode(this);
+                    atom.setHealth(atom.getHealth() - missile.getDamageHP());
+                    //if the invader is dead, clear the invader, update score
+                    if (atom.getHealth() < 0) {
+                        getSpriteManager().removeAtom(atom);
+                        atom.implode(this);
+                        getSpriteManager().addSpritesToBeRemoved(atom);
+                        this.atomsList.remove(atom);
+                        this.updateScore();
+
                         //remove the missile from there since it collided with an invader 
                         getSpriteManager().addSpritesToBeRemoved(missile);
-                       
-                        
-                        //where the invader touches the spaceship
-                        if (spriteA instanceof Ship) {
-                            if (spriteB instanceof Atom) {
-                                Ship spaceShip = ((Ship) spriteA); 
-                                //shielding
-                                if (!spaceShip.isShieldOn()) {
-                                    spaceShip.damaged();
-                                    
-                                }
-                                
-                                
-                                ((Atom) spriteB).implode(this);
-                                getSpriteManager().addSpritesToBeRemoved(spriteB);
-                                getSpriteManager().removeAtom((Atom) spriteB);
-                                if (getSpriteManager().getAtoms().isEmpty()) {
-                                    victory();
-                                }
-                                if (spaceShip.getlifeCount().get() == 0) {
-                                    spaceShip.isDead = true; 
-                                    lost(); 
-                                    
-                                }
-                            }
-                        }
                     }
+                }
+
+                //where the invader touches the spaceship
+                if (spriteA instanceof Ship && spriteB instanceof Atom ) {
+
+                    Ship spaceShip = ((Ship) spriteA);
+                   
+
+                    spaceShip.implode(this);
+//                    getSpriteManager().addSpritesToBeRemoved(spaceShip);
+                    System.out.println("implode");
+
+                }
+
                 //load sound
-                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
+                getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));
                 // play  explosion sound
                 getSoundManager().playSound("explosion");
-               if (!(spriteA instanceof Ship)) {                  
-                    spriteA.handleDeath(this); 
-                    
+                if (!(spriteA instanceof Ship)) {
+                    spriteA.handleDeath(this);
+
                 }
                 if (!(spriteB instanceof Ship)) {
                     spriteB.handleDeath(this);
-                    
-                }   
-               return true;
->>>>>>> a33505d2bc5c3d89d945909bebe6d344a8c44686
+
+                }
+                return true;
+
             }
-            
+
         }
         return false;
     }
-        return false;
-  
-      
-}
+
 }

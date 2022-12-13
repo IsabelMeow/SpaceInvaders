@@ -132,36 +132,7 @@ public class Atom extends Sprite {
         ft.play();
     }
 
-     public void implode(final GameEngine gameWorld, double centerX, double centerY) {
-        vX = vY = 0;
-        Node currentNode = getNode();
-        /* TODO: fix this code to add explosing effect*/
-        
-        Image explosionImage = new Image(ResourcesManager.explosion, 200d, 200d, true, true);
-        ImageView explosionAnimation = new ImageView(explosionImage);
-        Group groupOfExplosion = new Group(explosionAnimation);
-        
-        
-        gameWorld.getSceneNodes().getChildren().remove(groupOfExplosion);
-        gameWorld.getSceneNodes().getChildren().add(groupOfExplosion);
-        groupOfExplosion.setLayoutX(centerX- explosionImage.getWidth() / 2);
-        groupOfExplosion.setLayoutY(centerY - explosionImage.getHeight() / 2);
-         System.out.println(centerX);
-         System.out.println(centerY);
-         System.out.println("Explosion");
-         System.out.println(centerX- explosionImage.getWidth() / 2);
-         System.out.println(centerY - explosionImage.getHeight() / 2);
-        
-        FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
-        ft.setFromValue(vX);
-        ft.setToValue(0);
-        ft.setOnFinished((ActionEvent event) -> {
-            isDead = true;
-            gameWorld.getSceneNodes().getChildren().remove(currentNode);
-        });
-        ft.play();
-    }
-
+    
      
 
 

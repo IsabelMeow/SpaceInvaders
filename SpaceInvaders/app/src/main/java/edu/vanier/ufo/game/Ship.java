@@ -1,5 +1,6 @@
 package edu.vanier.ufo.game;
 
+import edu.vanier.ufo.engine.GameEngine;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.Sprite;
 import javafx.animation.*;
@@ -263,6 +264,25 @@ public class Ship extends Sprite {
         flipBook.setManaged(false);
         flipBook.setAutoSizeChildren(false);
         initHitZone();
+    }
+    
+    public void implode(final GameEngine gameWorld) {
+        vX = vY = 0;
+        Node currentNode = getNode();
+        /* TODO: fix this code to add explosing effect*/
+        Sprite explosion = new Atom(ResourcesManager.explosion);  
+        explosion.getNode().setLayoutX(currentNode.getTranslateX());
+        explosion.getNode().setLayoutY(currentNode.getTranslateX());
+        gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
+          
+        FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
+        ft.setFromValue(vX);
+        ft.setToValue(0);
+        ft.setOnFinished((ActionEvent event) -> {
+            isDead = true;
+            gameWorld.getSceneNodes().getChildren().remove(currentNode);
+        });
+        ft.play();
     }
 
     /**
