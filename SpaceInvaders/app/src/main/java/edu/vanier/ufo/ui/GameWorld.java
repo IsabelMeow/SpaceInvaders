@@ -232,8 +232,7 @@ public class GameWorld extends GameEngine {
             // random 0 to 2 + (.0 to 1) * random (1 or -1)
             // Randomize the location of each newly generated atom.
             atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setHealth(500);
+            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));       
             atom.setPoints(200);
 
             // random x between 0 to width of scene
