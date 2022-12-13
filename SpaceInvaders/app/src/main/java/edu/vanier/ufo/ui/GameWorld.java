@@ -42,6 +42,7 @@ public class GameWorld extends GameEngine {
     private boolean victory; 
     Label currentScore = new Label();
     Label livesCounter = new Label();
+    private LevelSettings level; 
 
     public int getScore() {
         return score;
@@ -60,8 +61,9 @@ public class GameWorld extends GameEngine {
         this.victory = victory;
     }
     
-    public GameWorld(int fps, String title) {
+    public GameWorld(int fps, String title, LevelSettings level) {
         super(fps, title);
+        this.level = level;
     }
 
     /**
@@ -82,7 +84,7 @@ public class GameWorld extends GameEngine {
         setGameSurface(new Scene(getSceneNodes(), 1000, 600));
 
         // Change the background of the main scene.
-        getGameSurface().setFill(Color.BLACK);
+        
 
         primaryStage.setScene(getGameSurface());
 

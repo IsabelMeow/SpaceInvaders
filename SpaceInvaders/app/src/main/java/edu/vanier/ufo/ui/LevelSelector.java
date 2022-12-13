@@ -65,6 +65,7 @@ public class LevelSelector extends Scene {
                 gameOver.setOnMouseClicked((event) -> {
                     try { 
                         Pane levelChoosing = new FXMLLoader(getClass().getResource("/fxml/levelChoosing.fxml")).load();
+                        gameWorld.getSceneNodes().getChildren().add(levelChoosing); 
                     } catch (IOException ex) {
                         Logger.getLogger(LevelSelector.class.getName()).log(Level.SEVERE, null, ex);
                     }
