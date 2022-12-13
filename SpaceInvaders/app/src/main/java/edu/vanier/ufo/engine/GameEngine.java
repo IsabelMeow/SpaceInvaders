@@ -168,17 +168,17 @@ public abstract class GameEngine {
                 
                 if (handleCollision(spriteA, spriteB)) {
                     
-                    Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
+                    //Shape boom = Shape.intersect((Shape)spriteA.getCollisionBounds(), (Shape)spriteB.getCollisionBounds()); 
                     //missile that explodes with an invader
                     if (spriteA instanceof Missile) {
                         Missile missile = ((Missile) spriteA); 
                         Atom atom = ((Atom) spriteB); 
-                        missile.implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
+                        missile.implode(this);
                         atom.setHealth(atom.getHealth() - missile.getDamageHP());
                         //if the invader is dead, clear the invader, update score
                         if (atom.getHealth() < 0) {
                             getSpriteManager().removeAtom(atom);
-                            atom.implode(this, atom.getCenterX(), atom.getCenterY());
+                            atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
                             score.set(score.get() + atom.getPoints());
                             //points
@@ -192,6 +192,7 @@ public abstract class GameEngine {
                         }
                         //remove the missile from there since it collided with an invader 
                         getSpriteManager().addSpritesToBeRemoved(missile);
+                       
                         
                         //where the invader touches the spaceship
                         if (spriteA instanceof Ship) {
@@ -207,7 +208,7 @@ public abstract class GameEngine {
                                     spaceShip.collidingNode.setOpacity(0);
                                 }
                                 
-                                ((Atom) spriteB).implode(this, boom.getBoundsInParent().getCenterX(), boom.getBoundsInParent().getCenterY());
+                                ((Atom) spriteB).implode(this);
                                 getSpriteManager().addSpritesToBeRemoved(spriteB);
                                 getSpriteManager().removeAtom((Atom) spriteB);
                                 if (spriteManager.getAtoms().isEmpty()) {
