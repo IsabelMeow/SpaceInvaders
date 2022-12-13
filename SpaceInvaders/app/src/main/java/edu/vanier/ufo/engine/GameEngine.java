@@ -235,8 +235,10 @@ public abstract class GameEngine {
      * @param spriteB - called from checkCollision() method to be compared.
      * @return boolean True if the objects collided, otherwise false.
      */
+    
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        return false;
+        Shape shape = Shape.intersect((Shape)spriteA.collidingNode, (Shape)spriteB.collidingNode);
+        return shape.getBoundsInLocal().getWidth() > -1;
     }
 
     /**
