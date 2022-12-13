@@ -162,8 +162,6 @@ public abstract class GameEngine {
                 if (handleCollision(spriteA, spriteB)) {
                     //missile that explodes with an invader
                    
-                  
-                }
             }
         }
     }
