@@ -20,7 +20,7 @@ import javafx.util.Duration;
  * @author cdea
  */
 public class Atom extends Sprite {
-
+    private int health; 
     private int points; 
     private double centerX; 
     private double centerY; 
@@ -39,6 +39,14 @@ public class Atom extends Sprite {
 
     public void setCenterY(double centerY) {
         this.centerY = centerY;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public int getPoints() {
@@ -108,6 +116,7 @@ public class Atom extends Sprite {
         });
         ft.play();
     }
+
      public void implode(final GameEngine gameWorld, double centerX, double centerY) {
         vX = vY = 0;
         Node currentNode = getNode();
@@ -137,12 +146,15 @@ public class Atom extends Sprite {
         });
         ft.play();
     }
-    
-   
+
+     
+
 
     @Override
     public void handleDeath(GameEngine gameWorld) {
         implode(gameWorld);
         super.handleDeath(gameWorld);
     }
+
+   
 }

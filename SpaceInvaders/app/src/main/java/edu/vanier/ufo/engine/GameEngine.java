@@ -30,17 +30,10 @@ import javafx.util.Duration;
  * @author cdea
  */
 public abstract class GameEngine {
-    private IntegerProperty score = new SimpleIntegerProperty(0);
+    
     Ship spaceShip = new Ship();
 
-    public IntegerProperty getScore() {
-        return score;
-    }
-
-    public void setScore(IntegerProperty score) {
-        this.score = score;
-    }
-
+   
 
     /**
      * The JavaFX Scene as the game surface
@@ -152,7 +145,6 @@ public abstract class GameEngine {
      */
     
     protected void victory(){
-        System.out.println("");
         
     }
     
@@ -168,7 +160,6 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
-                    
                     //missile that explodes with an invader
                     if ((spriteA instanceof Missile && spriteB instanceof Atom)) {
                         
@@ -182,7 +173,7 @@ public abstract class GameEngine {
                             getSpriteManager().removeAtom(atom);
                             atom.implode(this);
                             getSpriteManager().addSpritesToBeRemoved(atom);
-                            score.set(score.get() + atom.getPoints());
+                            //score.set(score.get() + atom.getPoints());
                             //points
                             //if we managed to kill all invaders, victory message
                             if (spriteManager.getAtoms().isEmpty()) {
@@ -223,6 +214,7 @@ public abstract class GameEngine {
                         }
                     }                  
                 }
+
             }
         }
     }

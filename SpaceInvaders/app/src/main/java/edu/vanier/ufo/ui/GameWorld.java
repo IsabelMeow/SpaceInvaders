@@ -38,8 +38,21 @@ public class GameWorld extends GameEngine {
     public Label levelNumber; 
     Ship spaceShip = new Ship(); 
     Atom invader;
+    private int score;
     private boolean victory; 
+    Label currentScore = new Label();
+    Label livesCounter = new Label();
+    private LevelSettings level; 
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    
     public boolean isVictory() {
         return victory;
     }
@@ -48,8 +61,9 @@ public class GameWorld extends GameEngine {
         this.victory = victory;
     }
     
-    public GameWorld(int fps, String title) {
+    public GameWorld(int fps, String title, LevelSettings level) {
         super(fps, title);
+        this.level = level;
     }
 
     /**
@@ -70,7 +84,7 @@ public class GameWorld extends GameEngine {
         setGameSurface(new Scene(getSceneNodes(), 1000, 600));
 
         // Change the background of the main scene.
-        getGameSurface().setFill(Color.BLACK);
+        
 
         primaryStage.setScene(getGameSurface());
 
@@ -108,11 +122,11 @@ public class GameWorld extends GameEngine {
         row1.getChildren().add(levelNumber);
         
         HBox row2 = new HBox();
-        Label currentScore = new Label();
+        
         currentScore.setTextFill(Color.WHITE); 
         
         //currentScore.textProperty().bind(spaceShip.getlifeCount().asString()); 
-        currentScore.setText("Current Score: " + getScore().get());
+        currentScore.setText("Current Score: " + this.getScore());
         currentScore.setFont(new Font("Monospaced Bold", 13.5));       
         Glow glow2 = new Glow();
         currentScore.setEffect(glow2);
@@ -120,7 +134,7 @@ public class GameWorld extends GameEngine {
         row2.getChildren().add(currentScore);
         
         HBox row3 = new HBox();
-        Label livesCounter = new Label();
+        
  // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
         livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
         livesCounter.setTextFill(Color.WHITE);
@@ -339,12 +353,67 @@ public class GameWorld extends GameEngine {
             getSceneNodes().getChildren().remove(missile.getNode());
         }
     }
+    
+    public void updateScore(){
+        this.score += 20; 
+        this.currentScore.setText("Current Score: " + this.getScore());
+    }
 
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
+                        if (spriteA instanceof Missile && spriteB instanceof Atom) {
+                        Missile missile = ((Missile) spriteA); 
+                        Atom atom = ((Atom) spriteB); 
+                        missile.implode(this);
+                        atom.setHealth(atom.getHealth() - missile.getDamageHP());
+                        //if the invader is dead, clear the invader, update score
+                        if (atom.getHealth() < 0) {
+                            getSpriteManager().removeAtom(atom);
+                            atom.implode(this);
+                            getSpriteManager().addSpritesToBeRemoved(atom);
+                            this.updateScore();
+                           
+                            //points
+                            //if we managed to kill all invaders, victory message
+                            if (getSpriteManager().getAtoms().isEmpty()) {
+                                victory();
+                                
+                            }
+                            
+                            
+                     
+                        //remove the missile from there since it collided with an invader 
+                        getSpriteManager().addSpritesToBeRemoved(missile);
+                       
+                        
+                        //where the invader touches the spaceship
+                        if (spriteA instanceof Ship) {
+                            if (spriteB instanceof Atom) {
+                                Ship spaceShip = ((Ship) spriteA); 
+                                //shielding
+                                if (!spaceShip.isShieldOn()) {
+                                    spaceShip.damaged();
+                                    
+                                }
+                                
+                                
+                                ((Atom) spriteB).implode(this);
+                                getSpriteManager().addSpritesToBeRemoved(spriteB);
+                                getSpriteManager().removeAtom((Atom) spriteB);
+                                if (getSpriteManager().getAtoms().isEmpty()) {
+                                    victory();
+                                }
+                                if (spaceShip.getlifeCount().get() == 0) {
+                                    spaceShip.isDead = true; 
+                                    lost(); 
+                                    
+                                }
+                            }
+                        }
+                    }
                 //load sound
                 getSoundManager().loadSoundEffects("explosion", getClass().getClassLoader().getResource(ResourcesManager.EXPLOSION));   
                 // play  explosion sound
@@ -363,6 +432,8 @@ public class GameWorld extends GameEngine {
         }
         return false;
     }
+        return false;
   
       
+}
 }
