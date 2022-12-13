@@ -361,7 +361,8 @@ public class GameWorld extends GameEngine {
         this.currentScore.setText("Current Score: " + this.getScore());
     }
 
-protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
+    @Override
+    protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
          if (spriteA != spriteB && !spriteA.getClass().equals(spriteB.getClass())) {
             if (spriteA.collide(spriteB)) {
