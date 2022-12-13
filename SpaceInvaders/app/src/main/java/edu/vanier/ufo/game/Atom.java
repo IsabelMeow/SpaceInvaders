@@ -111,10 +111,10 @@ public class Atom extends Sprite {
 
     /**
      * Animate an implosion. Once done remove from the game world
-     *
      * @param gameWorld - game world
+     * Two different implode methods were implemented in order to fix the bug:
+     * -Explosion effect appeared twice
      */
-    
     
     public void implodeWtihExplosion(final GameEngine gameWorld) {
         vX = vY = 0;
@@ -144,12 +144,16 @@ public class Atom extends Sprite {
         
     }
     
+    /**
+     * Removes sprites without doing an explosion
+     *
+     * @param gameWorld - game world
+     */
+    
     public void implode(final GameEngine gameWorld) {
         vX = vY = 0;
         Node currentNode = getNode();
-        
-        //TODO: fix this code to add explosing effect
-
+              
         FadeTransition ft = new FadeTransition(Duration.millis(150), currentNode);
         ft.setFromValue(vX);
         ft.setToValue(0);
@@ -161,8 +165,7 @@ public class Atom extends Sprite {
         ft.play();
         
     }
-
-    
+   
 
     @Override
     public void handleDeath(GameEngine gameWorld) {

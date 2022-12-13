@@ -16,7 +16,7 @@ public class ResourcesManager {
     private static final String RESOURCES_FOLDER = "";
     private static final String IMAGES_FOLDER = RESOURCES_FOLDER + "images/";
     private static final String SOUNDS_FOLDER = RESOURCES_FOLDER + "sounds/";
-     public static final String MISSILE_FOLDER = RESOURCES_FOLDER + "missiles/"; 
+    public static final String MISSILE_FOLDER = RESOURCES_FOLDER + "missiles/"; 
     // Ship images.
     public static final String SPACE_SHIP = IMAGES_FOLDER + "spiked ship.png";
     public static final String SPACE_STAR_SHIP = IMAGES_FOLDER + "starship.png";
@@ -50,8 +50,8 @@ public class ResourcesManager {
     public static final String Inv14 = ENEMY_FOLDER + "shipPink_manned.png"; 
     public static final String Inv15 = ENEMY_FOLDER + "shipYellow_manned.png"; 
     public static final String explosion = IMAGES_FOLDER + "explosion.gif"; 
-            //keep
-            // Sound effect files
+    
+    // Sound effect files
     public static final String EXPLOSION = SOUNDS_FOLDER + "explosion.wav";    
     
    

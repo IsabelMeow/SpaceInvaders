@@ -12,13 +12,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.effect.Glow;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * A spaceship with 32 directions When two atoms collide each will fade and
@@ -29,18 +26,14 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class Ship extends Sprite {
 
-    private IntegerProperty lifeCount = new SimpleIntegerProperty(3);
-    
-    public IntegerProperty getlifeCount() {
+    private int lifeCount;
+
+    public int getLifeCount() {
         return lifeCount;
     }
 
-    public void setlifeCount(int lifeCount) {
-        this.lifeCount.set(lifeCount);
-    }
-
-    public void damaged() {
-        this.lifeCount.set(this.lifeCount.get() - 1);
+    public void setLifeCount(int lifeCount) {
+        this.lifeCount = lifeCount;
     }
 
     /**

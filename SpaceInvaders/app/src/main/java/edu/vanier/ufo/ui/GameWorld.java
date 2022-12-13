@@ -91,8 +91,6 @@ public class GameWorld extends GameEngine {
         setGameSurface(new Scene(getSceneNodes(), 1000, 600));
 
         // Change the background of the main scene.
-        
-
         primaryStage.setScene(getGameSurface());
 
         getGameSurface().setFill(Color.BLACK);
@@ -145,7 +143,7 @@ public class GameWorld extends GameEngine {
         HBox row3 = new HBox();
         
         // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
-        livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
+        livesCounter.setText("Remaining lives: " + this.spaceShip.getLifeCount());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));
         Glow glow3 = new Glow();
@@ -417,7 +415,7 @@ public class GameWorld extends GameEngine {
                                 Ship spaceShip = ((Ship) spriteA); 
                                 //shielding
                                 if (!spaceShip.isShieldOn()) {
-                                    spaceShip.damaged();
+                                    //spaceShip.damaged();
                                     
                                 }
                                 
@@ -428,7 +426,7 @@ public class GameWorld extends GameEngine {
                                 if (getSpriteManager().getAtoms().isEmpty()) {
                                     victory();
                                 }
-                                if (spaceShip.getlifeCount().get() == 0) {
+                                if (spaceShip.getLifeCount() == 0) {
                                     spaceShip.isDead = true; 
                                     lost(); 
                                     

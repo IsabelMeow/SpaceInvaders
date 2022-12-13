@@ -3,6 +3,7 @@ package edu.vanier.ufo.game;
  * A missile projectile without the radial gradient.
  */
 public class Missile extends Atom {
+    
     private int damageHP; 
 
     public int getDamageHP() {
@@ -12,8 +13,6 @@ public class Missile extends Atom {
     public void setDamageHP(int damageHP) {
         this.damageHP = damageHP;
     }
-    
-
     
  
     public Missile(String imagePath) {        

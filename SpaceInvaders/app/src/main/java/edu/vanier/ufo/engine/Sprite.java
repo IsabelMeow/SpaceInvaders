@@ -17,8 +17,6 @@ public abstract class Sprite {
     private double height;
     public boolean isDead = false;
     
-
-
     protected Node collidingNode;
 
     public Sprite() {
