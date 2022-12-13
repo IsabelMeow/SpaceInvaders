@@ -38,6 +38,15 @@ public class GameWorld extends GameEngine {
     public Label levelNumber; 
     Ship spaceShip = new Ship(); 
     Atom invader;
+    private boolean victory; 
+
+    public boolean isVictory() {
+        return victory;
+    }
+
+    public void setVictory(boolean victory) {
+        this.victory = victory;
+    }
     
     public GameWorld(int fps, String title) {
         super(fps, title);
