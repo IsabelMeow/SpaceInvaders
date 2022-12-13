@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 public class SpaceInvadersApp extends Application {
     LevelSettings gameLevels; 
     GameEngine gameWorld;
+    
+    
 
     /**
      * @param args the command line arguments
@@ -24,7 +26,7 @@ public class SpaceInvadersApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        gameWorld = new GameWorld(ResourcesManager.FRAMES_PER_SECOND, "JavaFX Space Invaders");
+        gameWorld = new GameWorld(ResourcesManager.FRAMES_PER_SECOND, "JavaFX Space Invaders", new LevelSettings(1, 15));
         // Setup title, scene, stats, controls, and actors.
         gameWorld.initialize(primaryStage);
         // kick off the game loop

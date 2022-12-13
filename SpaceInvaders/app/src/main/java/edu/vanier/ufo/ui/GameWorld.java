@@ -88,8 +88,10 @@ public class GameWorld extends GameEngine {
 
         primaryStage.setScene(getGameSurface());
 
+        getGameSurface().setFill(Color.BLACK);
         // Setup Game input
         setupInput(primaryStage);
+        
         
         getSpriteManager().addSprites(this.gameLevel.getShip());
         getSceneNodes().getChildren().add(0, this.gameLevel.getShip().getNode());

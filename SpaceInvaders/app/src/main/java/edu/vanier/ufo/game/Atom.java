@@ -101,8 +101,8 @@ public class Atom extends Sprite {
         Node currentNode = getNode();
         /* TODO: fix this code to add explosing effect*/
         Sprite explosion = new Atom(ResourcesManager.explosion);  
-        explosion.getNode().setTranslateX(currentNode.getTranslateX() + vX);
-        explosion.getNode().setTranslateX(currentNode.getTranslateX() + vY);
+        explosion.getNode().setLayoutX(currentNode.getTranslateX());
+        explosion.getNode().setLayoutY(currentNode.getTranslateX());
         gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
         ft.setFromValue(vX);

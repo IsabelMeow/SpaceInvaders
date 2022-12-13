@@ -165,6 +165,7 @@ public abstract class GameEngine {
             }
         }
     }
+    }
 
     /**
      * When two objects collide this method can handle the passed in sprite
@@ -176,8 +177,7 @@ public abstract class GameEngine {
      */
     
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        Shape shape = Shape.intersect((Shape)spriteA.collidingNode, (Shape)spriteB.collidingNode);
-        return shape.getBoundsInLocal().getWidth() > -1;
+       return false; 
     }
 
     /**
