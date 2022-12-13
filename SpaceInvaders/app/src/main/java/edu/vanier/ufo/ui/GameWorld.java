@@ -412,6 +412,7 @@ public class GameWorld extends GameEngine {
                         
                         //where the invader touches the spaceship
                         if (spriteA instanceof Ship) {
+                            
                             if (spriteB instanceof Atom) {
                                 Ship spaceShip = ((Ship) spriteA); 
                                 //shielding
