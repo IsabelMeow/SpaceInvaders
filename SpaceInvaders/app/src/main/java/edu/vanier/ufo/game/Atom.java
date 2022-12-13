@@ -125,8 +125,13 @@ public class Atom extends Sprite {
         
         gameWorld.getSceneNodes().getChildren().remove(currentNode);
         gameWorld.getSceneNodes().getChildren().add(groupOfExplosion);
-        groupOfExplosion.setLayoutX(centerX);
-        groupOfExplosion.setLayoutY(centerY);
+        groupOfExplosion.setLayoutX(centerX- explosionImage.getWidth() / 2);
+        groupOfExplosion.setLayoutY(centerY - explosionImage.getHeight() / 2);
+         System.out.println(centerX);
+         System.out.println(centerY);
+         System.out.println("Explosion");
+         System.out.println(centerX- explosionImage.getWidth() / 2);
+         System.out.println(centerY - explosionImage.getHeight() / 2);
         
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
         ft.setFromValue(vX);

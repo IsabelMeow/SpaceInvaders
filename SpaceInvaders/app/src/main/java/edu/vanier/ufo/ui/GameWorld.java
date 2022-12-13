@@ -112,6 +112,7 @@ public class GameWorld extends GameEngine {
         
         HBox row3 = new HBox();
         Label livesCounter = new Label();
+ // livesCounter.textProperty().bind(spaceShip.getlifeCount().asString());
         livesCounter.setText("Remaining lives: " + spaceShip.getlifeCount().get());
         livesCounter.setTextFill(Color.WHITE);
         livesCounter.setFont(new Font("Monospaced Bold", 13.5));

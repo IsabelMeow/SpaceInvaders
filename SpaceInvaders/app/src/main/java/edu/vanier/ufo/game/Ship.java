@@ -347,7 +347,7 @@ public class Ship extends Sprite {
     public void update() {
         flipBook.setTranslateX(flipBook.getTranslateX() + vX);
         flipBook.setTranslateY(flipBook.getTranslateY() + vY);
-        System.out.println(vX + " " + vY);
+        //System.out.println(vX + " " + vY);
 
     }
 
