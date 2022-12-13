@@ -4,6 +4,8 @@ import edu.vanier.ufo.engine.GameEngine;
 import edu.vanier.ufo.engine.SoundManager;
 import edu.vanier.ufo.engine.Sprite;
 import edu.vanier.ufo.helpers.ResourcesManager;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -23,7 +25,21 @@ public class Atom extends Sprite {
     private int health; 
     private int points; 
     private double centerX; 
-    private double centerY; 
+    private double centerY;
+    private List<Atom> atoms; 
+
+    
+    private void addAtoms (Atom atom){
+       atoms.add(atom); 
+    }
+    
+    public List<Atom> getAtoms() {
+        return atoms;
+    }
+
+    public void setAtoms(List<Atom> atoms) {
+        this.atoms = atoms;
+    }
 
     public double getCenterX() {
         return centerX;
@@ -71,6 +87,7 @@ public class Atom extends Sprite {
         newAtom.setImage(shipImage);        
         this.node = newAtom;
         this.collidingNode = newAtom;
+        
     }
 
     /**

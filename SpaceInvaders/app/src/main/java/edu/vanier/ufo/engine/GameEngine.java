@@ -160,66 +160,12 @@ public abstract class GameEngine {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 
                 if (handleCollision(spriteA, spriteB)) {
-                    //missile that explodes with an invader
-                    if ((spriteA instanceof Missile && spriteB instanceof Atom)) {
-                        
-                        Missile missile = ((Missile) spriteA); 
-                        Atom atom = ((Atom) spriteB); 
-                        missile.implode(this);                        
-                        
-                        
-                        //if the invader is dead, clear the invader, update score
-  
-                            getSpriteManager().removeAtom(atom);
-                            atom.implode(this);
-                            getSpriteManager().addSpritesToBeRemoved(atom);
-                            //score.set(score.get() + atom.getPoints());
-                            //points
-                            //if we managed to kill all invaders, victory message
-                            if (spriteManager.getAtoms().isEmpty()) {
-                                victory();
-                                
-                            }
-
-                        //remove the missile from there since it collided with an invader 
-                        getSpriteManager().addSpritesToBeRemoved(missile);
-                       
-                        
-                        //where the invader touches the spaceship
-                        if (spriteA instanceof Ship) {
-                            if (spriteB instanceof Atom) {
-                                Ship spaceShip = ((Ship) spriteA); 
-                                //shielding
-                                if (!spaceShip.isShieldOn()) {
-                                    spaceShip.damaged();
-                                    
-                                }
-                                else {
-                                    spaceShip.setShieldOn(false); //removing shield since boom
-                                    spaceShip.collidingNode.setOpacity(0);
-                                }
-                                
-                                ((Atom) spriteB).implode(this);
-                                getSpriteManager().addSpritesToBeRemoved(spriteB);
-                                getSpriteManager().removeAtom((Atom) spriteB);
-                                if (spriteManager.getAtoms().isEmpty()) {
-                                    victory();
-                                }
-                                if (spaceShip.getlifeCount().get() == 0) {
-                                    spaceShip.isDead = true; 
-                                    lost(); 
-                                    
-                                }
-                            }
-                        }
-                    }                  
-                }
-
-            }
+                
+        
+    }
+    }
         }
     }
-    }
-
     /**
      * When two objects collide this method can handle the passed in sprite
      * objects. By default it returns false, meaning the objects do not collide.
