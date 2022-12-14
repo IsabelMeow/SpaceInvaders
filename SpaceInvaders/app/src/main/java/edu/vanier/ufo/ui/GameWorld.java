@@ -265,7 +265,7 @@ public class GameWorld extends GameEngine {
             atom.setPoints(200);
 
             // random x between 0 to width of scene
-            double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
+            double newX = rnd.nextInt((int) gameSurface.getHeight()- 100);
 
             // TODO: configure the size of the generated images.
             
@@ -424,8 +424,7 @@ public class GameWorld extends GameEngine {
                                 
                                 
                                 //((Atom) spriteB).implode(this);
-                                getSpriteManager().addSpritesToBeRemoved(spriteB);
-                                getSpriteManager().removeAtom((Atom) spriteB);
+                                getSpriteManager().addSpritesToBeRemoved(spaceShip);
                                 if (getSpriteManager().getAtoms().isEmpty()) {
                                     victory();
                                 }

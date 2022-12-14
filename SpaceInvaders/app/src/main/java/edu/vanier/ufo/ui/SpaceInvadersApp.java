@@ -26,6 +26,7 @@ public class SpaceInvadersApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setFullScreen(true);
         gameWorld = new GameWorld(ResourcesManager.FRAMES_PER_SECOND, "JavaFX Space Invaders", new LevelSettings(1, 15));
         // Setup title, scene, stats, controls, and actors.
         gameWorld.initialize(primaryStage);
