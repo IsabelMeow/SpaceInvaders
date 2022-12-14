@@ -29,26 +29,27 @@ public class LevelSettings {
      * Change the ship imageView depending on the level
      *
      */
+    
     public Ship generateShip(){
     
-        switch (this.getLevelNumber()) {
-            case 1:
-                this.ship.changeShip((ResourcesManager.SS1));
-                return this.getShip();
-            case 2:
-                this.ship.changeShip((ResourcesManager.SS2));
-                return this.getShip();
-            case 3:
-                this.ship.changeShip((ResourcesManager.SS3));
-                return this.getShip();
-            case 4:
-                this.ship.changeShip((ResourcesManager.SS4));
-                return this.getShip();
-            default:
-                break;
+         if (this.getLevelNumber() == 1) {
+            this.ship = new Ship(new Image(ResourcesManager.SS1)); 
+            return this.getShip();
         }
-
+        else if (this.getLevelNumber() == 2) {
+            this.ship = new Ship(new Image(ResourcesManager.SS2)); 
+            return this.getShip(); 
+            
+        } else if (this.getLevelNumber() == 3){
+            this.ship = new Ship(new Image(ResourcesManager.SS3)); 
+            return this.getShip(); 
+            
+        } else if (this.getLevelNumber() == 4) {
+            this.ship = new Ship (new Image(ResourcesManager.SS4)); 
+            return this.getShip(); 
+        }
         return null; 
+        
     }
     
     
