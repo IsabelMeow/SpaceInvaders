@@ -3,6 +3,7 @@ package edu.vanier.ufo.engine;
 import edu.vanier.ufo.game.Atom;
 import edu.vanier.ufo.game.Missile;
 import edu.vanier.ufo.game.Ship;
+import edu.vanier.ufo.ui.GameWorld;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
